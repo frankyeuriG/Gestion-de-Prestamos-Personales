@@ -45,8 +45,14 @@
               "version": "[6.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[6.0.9, )"
+            },
+            "Radzen.Blazor": {
+              "target": "Package",
+              "version": "[3.20.12, )"
             }
           },
           "imports": [

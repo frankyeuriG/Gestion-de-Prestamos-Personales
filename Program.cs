@@ -1,13 +1,26 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using GestionPrestamos2022.Data;
+using GestionPrestamos2022.DAL;
+using Microsoft.EntityFrameworkCore;
+using GestionPrestamos2022.BLL;
+using Radzen.Blazor;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var ConStr = builder.Configuration.GetConnectionString("ConStr");
+
+builder.Services.AddDbContext<Contexto>(Options =>
+    Options.UseSqlite(ConStr)
+);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<OcupacionesBLL>();
+builder.Services.AddScoped<NotificationService>();
+
 
 var app = builder.Build();
 
