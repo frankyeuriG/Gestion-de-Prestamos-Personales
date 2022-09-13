@@ -31,6 +31,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cm9zXFJfT2N1cGFjaW9uZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[c:/Users/frank/Desktop/Aplicada1/Projecto/GestionPrestamos2022/Pages/Registros/R_Personas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cm9zXFJfUGVyc29uYXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [c:/Users/frank/Desktop/Aplicada1/Projecto/GestionPrestamos2022/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
