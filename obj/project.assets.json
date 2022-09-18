@@ -1769,11 +1769,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\frank\\Desktop\\Aplicada1\\Projecto\\GestionPrestamos2022\\GestionPrestamos2022.csproj",
+      "projectUniqueName": "C:\\Users\\frank\\Source\\Repos\\Gestion-de-Prestamos-Personales\\GestionPrestamos2022.csproj",
       "projectName": "GestionPrestamos2022",
-      "projectPath": "C:\\Users\\frank\\Desktop\\Aplicada1\\Projecto\\GestionPrestamos2022\\GestionPrestamos2022.csproj",
+      "projectPath": "C:\\Users\\frank\\Source\\Repos\\Gestion-de-Prestamos-Personales\\GestionPrestamos2022.csproj",
       "packagesPath": "C:\\Users\\frank\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\frank\\Desktop\\Aplicada1\\Projecto\\GestionPrestamos2022\\obj\\",
+      "outputPath": "C:\\Users\\frank\\Source\\Repos\\Gestion-de-Prestamos-Personales\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\frank\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1836,7 +1836,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

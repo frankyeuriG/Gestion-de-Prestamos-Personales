@@ -1,0 +1,68 @@
+@page "/prestamos"
+@inject PrestamosBLL prestamosBLL;
+
+<EditForm Model="listas">
+    <DataAnnotationsValidator />
+
+    <div  class="row">
+        <select class="form-control" @bind="Filtro">
+            <option value="1">PrestamosId</option>
+            <option value="2">Concepto</option>
+        </select>
+    </div>
+
+    <label class="form-control">Criterio</label>
+    <input type="text" class="form-control" @bind="Criterio">
+
+    <div>
+        <button type="button" @onclick="Buscar">
+            <i>Buscar</i>
+        </button>
+    </div>
+
+    <table class="table table-striped table-hover">
+
+        <thead>
+            <tr>
+                <th>PrestamosId</th>
+                <th>Fecha Prestamo</th>
+                <th>Fecha Vencimiento</th>
+                <th>Concepto</th>
+                <th>Monto</th>
+                <th>Balance</th>
+                <th>PersonaId</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prestamo in listas)
+            {
+                <tr>
+                    <td>@prestamo.PrestamosId</td>
+                    <td>@prestamo.FechaPrestamo</td>
+                    <td>@prestamo.FechaVence</td>
+                    <td>@prestamo.Concepto</td>
+                    <td>@prestamo.Monto</td>
+                    <td>@prestamo.Balance</td>
+                    <td>@prestamo.PersonaId</td>
+                    <td><a href="prestamo/@prestamo.PrestamosId">Ver</a></td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+</EditForm>
+
+@code
+{
+    public string Filtro { get; set; } = "";
+    public string Criterio { get; set; } = "";
+
+    public List<Prestamo> listas { get; set; } = new List<Prestamo>();
+    public void Buscar()
+    {
+        listas = prestamosBLL.GetList(o => true);
+    }
+
+}
