@@ -1,0 +1,193 @@
+@page "/prestamo"
+@page "/prestamo/{PersonaId:int}"
+
+@inject PersonasBLL PersonasBLL
+@inject NotificationService notificationService
+@inject OcupacionesBLL ocupacionBLL
+@inject PrestamosBLL PrestamosBLL
+
+
+<EditForm Model="prestamo" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header">
+            <h3>Registro de Prestamos</h3>
+        </div>
+        <div class="card-body">
+            <form>
+                @*PrestamosId*@
+                <div class="form-row align-items-center">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>PrestamosId</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="prestamo.PrestamosId" class="form-control col-4" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                @*FechaPrestamo*@
+                <div class="form-group">
+                    <label>Fecha de Inicio</label>
+                    <InputDate readonly="true" @bind-Value="prestamo.FechaPrestamo"
+                                 class="form-control" />
+                 <ValidationMessage For="@(() => prestamo.FechaPrestamo)" />
+                </div>
+                 @*FechaVence*@
+                <div class="form-group">
+                    <label>Fecha De Vencimiento</label>
+                    <InputDate @bind-Value="prestamo.FechaVence"
+                                 class="form-control" />
+                 <ValidationMessage For="@(() => prestamo.FechaVence)" />
+                </div>
+
+                @*Concepto*@
+                <div class="form-group">
+                    <label>Concepto</label>
+                    <InputText @bind-Value="prestamo.Concepto"
+                                 class="form-control" />
+                    <ValidationMessage For="@(() => prestamo.Concepto)" />
+                </div>
+    
+               @*Monto*@
+            <div class="form-group">
+                <label>Monto</label>
+                <InputNumber @bind-Value="prestamo.Monto" class="form-control" />
+                <ValidationMessage For="@(() => prestamo.Monto)" />
+            </div>
+               @*Balance*@
+            <div class="form-group">
+                <label> Balance</label>
+                <InputNumber @bind-Value="prestamo.Balance" class="form-control" />
+                <ValidationMessage For="@(() => prestamo.Balance)" />
+            </div>
+                <div class="form-group col">
+                    <label >PersonaId</label>
+                    <InputSelect class="form-select" @bind-Value="prestamo.PersonaId">
+                        @foreach (Personas prestamo in lista)
+                        {
+                            <option value="@prestamo.PersonaId">@prestamo.Nombres (ID: @prestamo.PersonaId)</option>
+                        }
+                    </InputSelect>
+                </div>
+
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success" >Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int PrestamoId { get; set; }
+
+    [Parameter]
+    public int PersonaId { get; set; }
+    
+    public Prestamo prestamo { get; set; } = new Prestamo();
+
+    public String mensaje { get; set; } = "";
+  
+    public List<Personas> lista { get; set; } = new List<Personas>();
+
+   
+
+    protected override void OnInitialized()
+    {
+        if (PrestamoId > 0)
+        {
+            this.prestamo.PrestamosId = PrestamoId;
+            this.Buscar();
+        }lista = PersonasBLL.GetList(o => true);
+    }
+
+    public void Nuevo()
+    {
+        mensaje = "";
+        prestamo = new Prestamo();
+    }
+
+    bool Validar()
+    {
+        return prestamo.Concepto.Contains(".");
+    }
+
+    public void Guardar()
+    {
+        bool guardo;
+        
+        if (!Validar())
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Warning,
+                Summary = "No Guardo"
+            });
+            return;
+        }
+        guardo = PrestamosBLL.Guardar(prestamo);
+
+        if (guardo)
+        {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Guardado correctamente"
+            });
+            
+            Nuevo();
+            
+        }
+        
+    }
+    private void Buscar()
+    {
+        if (prestamo.PrestamosId > 0)
+        {
+            var encontrado = PrestamosBLL.Buscar(prestamo.PrestamosId);
+
+            if (encontrado != null)
+                this.prestamo = encontrado;
+            
+        }
+    }
+
+    public void Eliminar()
+    {
+        bool elimino;
+
+        elimino = PrestamosBLL.Eliminar(prestamo);
+
+        if (elimino)
+        {   
+             ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Eliminado"
+            });
+            
+            Nuevo();
+            
+        }
+        
+    }
+
+    void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
+
+    }
+}
