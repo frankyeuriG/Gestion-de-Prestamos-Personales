@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "F+WJoQbEc79utEHjqol32z3cXRg4zHib6aGFZVW/ulRir/l78DoI/7r8KM/AblLClob3a7IU7FFflPtScbrKlA==",
+  "dgSpecHash": "jLplDbQ93DBCetopXV4fpKzDBbeHm/UF7ZY93ENiwA/jAEXObyR8xkih9R0brMMRYpUebmviw489xxb9gPjT2w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\frank\\Source\\Repos\\Gestion-de-Prestamos-Personales\\GestionPrestamos2022.csproj",
+  "projectFilePath": "C:\\Users\\frank\\Desktop\\Gestion de Prestamos 2022\\GestionPrestamos2022.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\frank\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\frank\\.nuget\\packages\\libsassbuilder\\2.0.1\\libsassbuilder.2.0.1.nupkg.sha512",

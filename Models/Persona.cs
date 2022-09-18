@@ -26,6 +26,8 @@ namespace GestionPrestamos2022.Models
         public string Telefono {get; set;}
 
         public int OcupacionId{get; set;}
+
+        public float Balance{get; set;}
     }
 
   

@@ -4,6 +4,7 @@
 @inject PersonasBLL PersonasBLL
 @inject NotificationService notificationService
 @inject OcupacionesBLL ocupacionBLL
+@inject PrestamosBLL PrestamosBLL
 
 <EditForm Model="persona" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -62,6 +63,12 @@
                                  class="form-control" />
                     <ValidationMessage For="@(() => persona.Telefono)" />
                 </div>
+              @*Balance*@
+            <div class="form-group">
+                <label>Balance</label>
+                <InputNumber @bind-Value="persona.Balance" class="form-control" />
+                <ValidationMessage For="@(() => persona.Balance)" />
+            </div>
                 <div class="form-group col">
                     <label >Ocupaciones</label>
                     <InputSelect class="form-select" @bind-Value="persona.OcupacionId">
@@ -71,7 +78,7 @@
                         }
                     </InputSelect>
                 </div>
-
+             
             </form>
         </div>
         <div class="card-footer">
@@ -92,8 +99,7 @@
   
     public String mensaje { get; set; } = "";
     public List<Ocupaciones> lista { get; set; } = new List<Ocupaciones>();
-
-   
+    
 
     protected override void OnInitialized()
     {
@@ -102,7 +108,8 @@
            
             this.persona.PersonaId = PersonaId;
             this.Buscar();
-        }lista = ocupacionBLL.GetList(o => true);
+        }
+        lista = ocupacionBLL.GetList(o => true);
     }
 
     public void Nuevo()
@@ -113,7 +120,8 @@
 
     bool Validar()
     {
-        return persona.Nombres.Contains(".");
+        return persona.Email.Contains(".com");
+
     }
 
     public void Guardar()
@@ -122,13 +130,18 @@
         
         if (!Validar())
         {
-            mensaje = "hay errores, favor corregir";
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error Revise los campos "
+            });
             return;
+            
         }
 
-
         guardo = PersonasBLL.Guardar(persona);
-
+        
         if (guardo)
         {
             ShowNotification(
@@ -163,6 +176,12 @@
 
         if (elimino)
         {
+            ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Eliminado"
+            });
             Nuevo();
             
         }
@@ -177,4 +196,3 @@
 }
 
    
-
