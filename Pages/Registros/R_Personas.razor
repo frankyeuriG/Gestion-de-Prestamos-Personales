@@ -17,12 +17,16 @@
                 @*PersonaId*@
                 <div class="form-row align-items-center">
                     <div class="col">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label>PersonaId</label>
                             <div class="input-group">
                                 <InputNumber @bind-Value="persona.PersonaId" class="form-control col-4" />
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar</button>
+                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar
+                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                        </svg>  
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -30,46 +34,46 @@
                 </div>
                 
                 @*Nombres*@
-                <div class="form-group">
+                <div class="mb-3">
                     <label>Nombres</label>
                     <InputText @bind-Value="persona.Nombres" class="form-control" />
                     <ValidationMessage For="@(() => persona.Nombres)" />
                 </div>
                  @*Direccion*@
-                <div class="form-group">
+                <div class="mb-3">
                     <label>Direccion</label>
                     <InputText @bind-Value="persona.Direccion" class="form-control" />
                     <ValidationMessage For="@(() => persona.Direccion)" />
                 </div>
 
                 @*Email*@
-                <div class="form-group">
+                <div class="mb-3">
                     <label>Email</label>
                     <InputText @bind-Value="persona.Email"
                                  class="form-control" />
                     <ValidationMessage For="@(() => persona.Email)" />
                 </div>
                 @*FechaNacimiento*@
-                <div class="form-group">
+                <div class="mb-3">
                     <label>Fecha De Nacimiento</label>
                     <InputDate @bind-Value="persona.FechaNacimiento"
                                  class="form-control" />
                     <ValidationMessage For="@(() => persona.FechaNacimiento)" />
                 </div>
                 @*Telefono*@
-                <div class="form-group">
+                <div class="mb-3">
                     <label>Telefono</label>
                     <InputText @bind-Value="persona.Telefono"
                                  class="form-control" />
                     <ValidationMessage For="@(() => persona.Telefono)" />
                 </div>
               @*Balance*@
-            <div class="form-group">
+            <div class="mb-3">
                 <label>Balance</label>
                 <InputNumber @bind-Value="persona.Balance" class="form-control" />
                 <ValidationMessage For="@(() => persona.Balance)" />
             </div>
-                <div class="form-group col">
+                <div class="mb-3 col">
                     <label >Ocupaciones</label>
                     <InputSelect class="form-select" @bind-Value="persona.OcupacionId">
                         @foreach (Ocupaciones persona in lista)
@@ -83,9 +87,21 @@
         </div>
         <div class="card-footer">
             <div class="form-group text-center" display: inline-block>
-                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
-                <button type="submit" class="btn btn-lg btn-success">Guardar</button>
-                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>   
+                </button>
+                <button type="submit" class="btn btn-lg btn-success">Guardar
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                        <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
+                    </svg>
+                </button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>

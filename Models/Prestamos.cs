@@ -16,7 +16,7 @@ namespace GestionPrestamos2022.Models
         public DateTime? FechaVence { get; set; }
 
         [Required(ErrorMessage = "Es obligatorio el Concepto")]
-        public string Concepto { get; set; }
+        public string? Concepto { get; set; }
 
         [Range(minimum: 1, maximum: 100000000000, ErrorMessage = "Monto prestamo")]
         public float Monto { get; set; }

@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Pages",
+    "\\Pages\\Consultas",
+    "\\Pages\\Registros"
   ],
-  "SelectedNode": "\\C:\\Users\\frank\\Desktop\\Gestion de Prestamos 2022",
+  "SelectedNode": "\\Pages\\Registros\\R_prestamos.razor",
   "PreviewInSolutionExplorer": false
 }

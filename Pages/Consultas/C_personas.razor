@@ -1,13 +1,14 @@
-@page "/prestamos"
-@inject PrestamosBLL prestamosBLL;
 
-<EditForm Model="listasp">
+@page "/personas"
+@inject PersonasBLL personaBLL;
+
+<EditForm Model="listas">
     <DataAnnotationsValidator />
 
     <div  class="row">
         <select class="form-control" @bind="Filtro">
-            <option value="1">PrestamosId</option>
-            <option value="2">Concepto</option>
+            <option value="1">PersonaId</option>
+            <option value="2">Nombres</option>
         </select>
     </div>
 
@@ -27,28 +28,28 @@
 
         <thead>
             <tr>
-                <th>PrestamosId</th>
-                <th>Fecha Prestamo</th>
-                <th>Fecha Vencimiento</th>
-                <th>Concepto</th>
-                <th>Monto</th>
-                <th>Balance</th>
                 <th>PersonaId</th>
+                <th>Nombres</th>
+                <th>Fecha Nacimiento</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Balance</th>
+                <th>OcupacionId</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var prestamo in listasp)
+            @foreach (var personas in listas)
             {
                 <tr>
-                    <td>@prestamo.PrestamosId</td>
-                    <td>@prestamo.FechaPrestamo</td>
-                    <td>@prestamo.FechaVence</td>
-                    <td>@prestamo.Concepto</td>
-                    <td>@prestamo.Monto</td>
-                    <td>@prestamo.Balance</td>
-                    <td>@prestamo.PersonaId</td>
-                    <td><a href="prestamo/@prestamo.PrestamosId">Ver</a></td>
+                    <td>@personas.PersonaId</td>
+                    <td>@personas.Nombres</td>
+                    <td>@personas.FechaNacimiento</td>
+                    <td>@personas.Email</td>
+                    <td>@personas.Telefono</td>
+                    <td>@personas.Balance</td>
+                    <td>@personas.OcupacionId</td>
+                    <td><a href="personas/@personas.PersonaId">Ver</a></td>
                 </tr>
             }
 
@@ -62,10 +63,10 @@
     public string Filtro { get; set; } = "";
     public string Criterio { get; set; } = "";
 
-    public List<Prestamo> listasp { get; set; } = new List<Prestamo>();
+    public List<Personas> listas { get; set; } = new List<Personas>();
     public void Buscar()
     {
-        listasp = prestamosBLL.GetList(o => true);
+        listas = personaBLL.GetList(o => true);
     }
 
 }
