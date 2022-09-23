@@ -35,16 +35,23 @@ namespace GestionPrestamos2022.BLL
             else
                 return this.Modificar(prestamo);
         }
+         public bool Editar(Prestamo prestamo)
+        {
+            if (!Existe(prestamo.PrestamosId))
+                return this.Insertar(prestamo);
+            else
+                return this.Modificar(prestamo);
+        }
         public bool Eliminar(Prestamo prestamo)
         {
             _contexto.Entry(prestamo).State = EntityState.Deleted;
             return _contexto.SaveChanges() > 0;
         }
 
-        public Prestamo? Buscar(int personaId)
+        public Prestamo? Buscar(int prestamoId)
         {
             return _contexto.Prestamo
-            .Where(o => o.PersonaId == personaId)
+            .Where(o => o.PrestamosId == prestamoId)
             .AsNoTracking()
             .SingleOrDefault();
         }

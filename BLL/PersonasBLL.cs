@@ -29,6 +29,13 @@ namespace GestionPrestamos2022.BLL
             else
             return this.Modificar(persona);
         }
+          public bool Editar(Personas persona){
+            if(!Existe(persona.PersonaId))
+            return this.Insertar(persona);
+            else
+            return this.Modificar(persona);
+        }
+        
         public bool Eliminar(Personas persona){
             _contexto.Entry(persona).State = EntityState.Deleted;
             return _contexto.SaveChanges()>0;
