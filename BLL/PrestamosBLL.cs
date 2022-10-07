@@ -20,11 +20,31 @@ namespace GestionPrestamos2022.BLL
         private bool Insertar(Prestamo prestamo)
         {
             _contexto.Prestamo.Add(prestamo);
-            return _contexto.SaveChanges() > 0;
+
+            var persona = _contexto.Personas.Find(prestamo.PersonaId);
+            persona.Balance += prestamo.Monto;
+
+            int Cantidad = _contexto.SaveChanges();
+
+            return Cantidad> 0;
         }
-        private bool Modificar(Prestamo prestamo)
+       public bool Modificar(Prestamo prestamoActual)
         {
-            _contexto.Entry(prestamo).State = EntityState.Modified;
+            //descontar el monto anterior
+            var prestamoAnterior = _contexto.Prestamo
+                .Where(p => p.PrestamosId == prestamoActual.PrestamosId)
+                .AsNoTracking()
+                .SingleOrDefault();
+
+            var personaAnterior = _contexto.Personas.Find(prestamoAnterior.PersonaId);
+            personaAnterior.Balance -= prestamoAnterior.Monto;
+
+            _contexto.Entry(prestamoActual).State = EntityState.Modified;
+            
+            //descontar el monto nuevo
+            var persona = _contexto.Personas.Find(prestamoActual.PersonaId);
+            persona.Balance += prestamoActual.Monto;
+
             return _contexto.SaveChanges() > 0;
         }
 
@@ -44,6 +64,9 @@ namespace GestionPrestamos2022.BLL
         }
         public bool Eliminar(Prestamo prestamo)
         {
+            var persona = _contexto.Personas.Find(prestamo.PersonaId);
+            persona.Balance -= prestamo.Monto;
+            
             _contexto.Entry(prestamo).State = EntityState.Deleted;
             return _contexto.SaveChanges() > 0;
         }
