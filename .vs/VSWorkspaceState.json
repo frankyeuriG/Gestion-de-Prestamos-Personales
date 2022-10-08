@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Pages",
-    "\\Pages\\Consultas",
-    "\\Pages\\Registros"
+    "\\BLL"
   ],
-  "SelectedNode": "\\Pages\\Registros\\R_Prestamos.razor",
+  "SelectedNode": "\\BLL\\PrestamosBLL.cs",
   "PreviewInSolutionExplorer": false
 }
