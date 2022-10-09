@@ -12,6 +12,9 @@
     <div class="card">
         <div class="card-header">
             <h3>Registro de Prestamos</h3>
+             <div style="float:right">
+                <td><a href="/prestamos"><h6>Ir a Consulta de Prestamos</h6></a></td>
+            </div> 
         </div>
         <div class="card-body">
             <form>
@@ -43,7 +46,7 @@
                 <div class="mb-3">
                     <label>Fecha De Vencimiento</label>
                     <InputDate @bind-Value="prestamo.FechaVence"
-                                 class="form-control" />
+                        class="form-control" />
                  <ValidationMessage For="@(() => prestamo.FechaVence)" />
                 </div>
 
@@ -70,7 +73,7 @@
                 <div class="mb-3 col">
                     <label >PersonaId</label>
                     <InputSelect class="form-select" @bind-Value="prestamo.PersonaId">
-                        @foreach (Personas prestamo in lista)
+                        @foreach (Personas prestamo in listas)
                         {
                             <option value="@prestamo.PersonaId">@prestamo.Nombres (ID: @prestamo.PersonaId)</option>
                         }
@@ -106,7 +109,7 @@
 
     public String mensaje { get; set; } = "";
   
-    public List<Personas> lista { get; set; } = new List<Personas>();
+    public List<Personas> listas { get; set; } = new List<Personas>();
 
    
 
@@ -116,7 +119,7 @@
         {
             this.prestamo.PrestamosId = PrestamoId;
             this.Buscar();
-        }lista = PersonasBLL.GetList(o => true);
+        }listas = PersonasBLL.GetList(o => true);
     }
 
     public void Nuevo()

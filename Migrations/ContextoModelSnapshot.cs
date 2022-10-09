@@ -64,7 +64,6 @@ namespace GestionPrestamos2022.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Telefono")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("PersonaId");
@@ -101,6 +100,63 @@ namespace GestionPrestamos2022.Migrations
                     b.HasKey("PrestamosId");
 
                     b.ToTable("Prestamo");
+                });
+
+            modelBuilder.Entity("GestionPrestamos2022.Pagos", b =>
+                {
+                    b.Property<int>("PagosId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Concepto")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Monto")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("PersonaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PagosId");
+
+                    b.ToTable("Pagos");
+                });
+
+            modelBuilder.Entity("GestionPrestamos2022.PagosDetalle", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PagosId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PrestamosId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("ValorPagado")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PagosDetalle");
+                });
+
+            modelBuilder.Entity("GestionPrestamos2022.PagosDetalle", b =>
+                {
+                    b.HasOne("GestionPrestamos2022.Pagos", null)
+                        .WithMany("PagosDetalle")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GestionPrestamos2022.Pagos", b =>
+                {
+                    b.Navigation("PagosDetalle");
                 });
 #pragma warning restore 612, 618
         }

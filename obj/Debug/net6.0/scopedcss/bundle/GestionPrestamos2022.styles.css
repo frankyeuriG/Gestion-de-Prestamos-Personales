@@ -3,6 +3,10 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    background: #ADA996;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
 }
 
 main[b-7fmjdhnuwu] {
@@ -68,6 +72,8 @@ main[b-7fmjdhnuwu] {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
+    
+    
 }
 /* _content/GestionPrestamos2022/Shared/NavMenu.razor.rz.scp.css */
 .navbar-toggler[b-dyudbz2uqv] {
