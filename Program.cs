@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using GestionPrestamos2022.Data;
+using GestionPrestamos2022;
 using GestionPrestamos2022.DAL;
 using Microsoft.EntityFrameworkCore;
 using GestionPrestamos2022.BLL;
@@ -22,6 +22,7 @@ builder.Services.AddScoped<OcupacionesBLL>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<PersonasBLL>();
 builder.Services.AddScoped<PrestamosBLL>();
+builder.Services.AddScoped<PAgosBLL>();
 
 
 var app = builder.Build();

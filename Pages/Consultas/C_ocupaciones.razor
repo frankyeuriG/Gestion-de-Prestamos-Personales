@@ -3,48 +3,47 @@
 
 <EditForm Model="lista">
     <DataAnnotationsValidator />
+    <div class="container">
+        <div class="mb-3">
+            <select class="form-control" @bind="Filtro">
+                <option value="1">OcupacionId</option>
+                <option value="2">Descripcion</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" @bind="Criterio" placeholder="Intruduzca el Criterio " />
+            <div class="input-group-append col">
+                <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
+                    <i class="oi oi-magnifying-glass" /> Buscar
+                </button>
+            </div>
+        </div>
 
-    <div  class="row">
-        <select class="form-control" @bind="Filtro">
-            <option value="1">OcupacionId</option>
-            <option value="2">Descripcion</option>
-        </select>
-    </div>
+        <table class="table table-success table-striped" id="tabla">
 
-    <label class="form-control">Criterio</label>
-    <input type="text" class="form-control" @bind="Criterio">
-
-    <div>
-        <button type="button" @onclick="Buscar">
-             <i class="oi oi-magnifying-glass" />
-         <i>Buscar</i>
-        </button>
-    </div>
-
-    <table class="table">
-
-        <thead>
-            <tr>
-                <th>OcupacionId</th>
-                <th>Descripcion</th>
-                <th>Salario</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var ocupacion in lista)
-            {
+            <thead>
                 <tr>
-                    <td>@ocupacion.OcupacionId</td>
-                    <td>@ocupacion.Descripcion</td>
-                    <td>@ocupacion.Salario</td>
-                    <td><a href="ocupacion/@ocupacion.OcupacionId">Ver</a></td>
+                    <th>OcupacionId</th>
+                    <th>Descripcion</th>
+                    <th>Salario</th>
+                    <th></th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (var ocupacion in lista)
+                {
+                    <tr>
+                        <td>@ocupacion.OcupacionId</td>
+                        <td>@ocupacion.Descripcion</td>
+                        <td>@ocupacion.Salario</td>
+                        <td><a href="ocupacion/@ocupacion.OcupacionId">Ver</a></td>
+                    </tr>
+                }
 
-        </tbody>
+            </tbody>
 
-    </table>
+        </table>
+    </div>
 </EditForm>
 
 @code

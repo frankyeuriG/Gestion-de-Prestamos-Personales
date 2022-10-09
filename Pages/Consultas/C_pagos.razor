@@ -1,0 +1,65 @@
+@page "/pago"
+@inject PAgosBLL PagosBLL;
+
+<EditForm Model="listaPagos">
+    <DataAnnotationsValidator />
+
+    <div class="container">
+        <div class="mb-3">
+            <select class="form-control" @bind="Filtro">
+                <option value="1">PagoId</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" @bind="Criterio" placeholder="Introduzca el Criterio">
+            <div class="input-group-append col">
+                <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
+                    <i class="oi oi-magnifying-glass" /> Buscar
+                </button>
+            </div>
+        </div>
+
+        <table class="table table-success table-striped">
+
+            <thead>
+                <tr>
+                    <th>PagosId</th>
+                    <th>Fecha</th>
+                    <th>PersonaId</th>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var pago in listaPagos)
+                {
+                    <tr>
+                        <td>@pago.PagosId</td>
+                        <td>@pago.Fecha</td>
+                        <td>@pago.PersonaId</td>
+                        <td>@pago.Concepto</td>
+                        <td>@pago.Monto</td>
+                        <td><a href="Pagos/@pago.PagosId">Ver</a></td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+</EditForm>
+
+@code
+{
+    public string Filtro { get; set; } = "";
+    public string Criterio { get; set; } = "";
+
+    public List<Pagos> listaPagos { get; set; } = new List<Pagos>();
+    public void Buscar()
+    {
+        listaPagos = PagosBLL.GetList(o => true);
+    }
+
+}

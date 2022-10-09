@@ -11,6 +11,9 @@
     <div class="card">
         <div class="card-header">
             <h3>Registro de Personas</h3>
+             <div style="float:right">
+                <td><a href="/personas"><h6>Ir a Consulta de Personas</h6></a></td>
+            </div> 
         </div>
         <div class="card-body">
             <form>
@@ -100,6 +103,7 @@
             </div>
         </div>
     </div>
+
 </EditForm>
 
 @code {
@@ -122,6 +126,8 @@
         }
         lista = ocupacionBLL.GetList(o => true);
     }
+
+       
 
     public void Nuevo()
     {
@@ -222,4 +228,3 @@
     }
 }
 
-   
