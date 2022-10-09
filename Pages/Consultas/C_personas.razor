@@ -5,15 +5,10 @@
 <EditForm Model="listas">
     <DataAnnotationsValidator />
 
+     <div class="card">
         <div class="container">
             <div class="mb-3">
-                <select class="form-control" @bind="Filtro">
-                    <option value="1">PersonaId</option>
-                    <option value="2">Nombres</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <input type="text" class="form-control" @bind="Criterio" placeholder="Introduzca un Criterio">
+                <input type="text" class="form-control" @bind="Criterio" placeholder="Introduzca un Nombre">
                 <div class="input-group-append col">
                     <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
                         <i class="oi oi-magnifying-glass" /> Buscar
@@ -53,17 +48,18 @@
 
             </table>
         </div>
+
+    </div>
 </EditForm>
 
 @code
 {
-    public string Filtro { get; set; } = "";
     public string Criterio { get; set; } = "";
 
     public List<Personas> listas { get; set; } = new List<Personas>();
     public void Buscar()
     {
-        listas = personaBLL.GetList(o => true);
+        listas = personaBLL.BuscarP(Criterio);
     }
 
 }

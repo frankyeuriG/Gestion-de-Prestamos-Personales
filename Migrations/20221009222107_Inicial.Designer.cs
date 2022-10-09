@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionPrestamos2022.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20221009032526_Inicial")]
+    [Migration("20221009222107_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,11 +86,10 @@ namespace GestionPrestamos2022.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("FechaPrestamo")
+                    b.Property<DateTime>("FechaPrestamo")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("FechaVence")
-                        .IsRequired()
+                    b.Property<DateTime>("FechaVence")
                         .HasColumnType("TEXT");
 
                     b.Property<float>("Monto")

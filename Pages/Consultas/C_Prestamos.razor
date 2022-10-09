@@ -4,65 +4,84 @@
 <EditForm Model="listasp">
     <DataAnnotationsValidator />
 
-    <div class="container">
+    <div class="card">
+
+        <div class="container">
+
+          
         <div class="mb-3">
-            <select class="form-control" @bind="Filtro">
-                <option value="1">PrestamosId</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <input type="text" class="form-control" @bind="Criterio" placeholder="Introduzca un criterio">
-            <div class="input-group-append col">
-                <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
-                    <i class="oi oi-magnifying-glass" /> Buscar
-                </button>
+            <div class="input-group mb-4">
+            <input type="date" @bind="fecha">
+            <input type="date" @bind="fecha2">
+            <button @onclick="Buscar" class="btn btn-primary"> <i class="oi oi-magnifying-glass"></i></button>
             </div>
         </div>
 
-        <table class="table table-success table-striped">
+            <table class="table table-success table-striped">
 
-            <thead>
-                <tr>
-                    <th>PrestamosId</th>
-                    <th>Fecha Prestamo</th>
-                    <th>Fecha Vencimiento</th>
-                    <th>Concepto</th>
-                    <th>Monto</th>
-                    <th>Balance</th>
-                    <th>PersonaId</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var prestamo in listasp)
-                {
+                <thead>
                     <tr>
-                        <td>@prestamo.PrestamosId</td>
-                        <td>@prestamo.FechaPrestamo</td>
-                        <td>@prestamo.FechaVence</td>
-                        <td>@prestamo.Concepto</td>
-                        <td>@prestamo.Monto</td>
-                        <td>@prestamo.Balance</td>
-                        <td>@prestamo.PersonaId</td>
-                        <td><a href="prestamo/@prestamo.PrestamosId">Ver</a></td>
+                        <th>PrestamosId</th>
+                        <th>Fecha Prestamo</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Concepto</th>
+                        <th>Monto</th>
+                        <th>Balance</th>
+                        <th>PersonaId</th>
+                        <th></th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @foreach (var prestamo in listasp)
+                    {
+                        <tr>
+                            <td>@prestamo.PrestamosId</td>
+                            <td>@prestamo.FechaPrestamo</td>
+                            <td>@prestamo.FechaVence</td>
+                            <td>@prestamo.Concepto</td>
+                            <td>@prestamo.Monto</td>
+                            <td>@prestamo.Balance</td>
+                            <td>@prestamo.PersonaId</td>
+                            <td><a href="prestamo/@prestamo.PrestamosId">Ver</a></td>
+                        </tr>
+                    }
 
-            </tbody>
+                </tbody>
 
-        </table>
+            </table>
+        </div>
     </div>
 </EditForm>
 
 @code
 {
-    public string Filtro { get; set; } = "";
+   
+    public DateTime fecha { get; set; } = new DateTime();
+    public DateTime fecha2 { get; set; } = new DateTime();
     public string Criterio { get; set; } = "";
-
     public List<Prestamo> listasp { get; set; } = new List<Prestamo>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        fecha = DateTime.Now;
+        fecha2 = DateTime.Now;
+    }
+
+   
     public void Buscar()
     {
-        listasp = prestamosBLL.GetList(o => true);
+         if (fecha != null || fecha2 != null)
+        {
+
+            listasp = prestamosBLL.Buscarf(fecha,fecha2);
+
+        }
+        else
+        {
+            Console.WriteLine("No se encontro esta fecha");
+        }
+
     }
 
 }

@@ -119,7 +119,9 @@
         {
             this.prestamo.PrestamosId = PrestamoId;
             this.Buscar();
-        }listas = PersonasBLL.GetList(o => true);
+        }
+        listas = PersonasBLL.GetList(o => true);
+        prestamo.FechaPrestamo = DateTime.Now;
     }
 
     public void Nuevo()
@@ -130,7 +132,7 @@
 
     bool Validar()
     {
-        return prestamo.Concepto.Contains(".");
+        return true;
     }
 
     public void Guardar()

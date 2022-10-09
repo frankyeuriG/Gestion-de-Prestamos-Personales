@@ -78,6 +78,15 @@ namespace GestionPrestamos2022.BLL
             .AsNoTracking()
             .SingleOrDefault();
         }
+
+        public List<Prestamo> Buscarf(DateTime fecha, DateTime fecha2)
+    {
+
+        var fechas = _contexto.Prestamo
+         .Where(f => f.FechaPrestamo.Date == fecha.Date || f.FechaVence.Date == fecha2.Date)
+         .AsNoTracking().ToList();
+        return fechas;
+    }
         public List<Prestamo> GetList(Expression<Func<Prestamo, bool>> Criterio)
         {
             return _contexto.Prestamo

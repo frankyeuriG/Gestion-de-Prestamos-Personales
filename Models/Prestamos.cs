@@ -8,12 +8,12 @@ namespace GestionPrestamos2022.Models
         [Key]
         public int PrestamosId { get; set; }
 
-        public DateTime? FechaPrestamo { get; set; } = DateTime.Now;
+        public DateTime FechaPrestamo { get; set; } 
 
         [Required(ErrorMessage = "Complete este Campo")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-        public DateTime? FechaVence { get; set; }
+        public DateTime FechaVence { get; set; }
 
         [Required(ErrorMessage = "Es obligatorio el Concepto")]
         public string? Concepto { get; set; }
