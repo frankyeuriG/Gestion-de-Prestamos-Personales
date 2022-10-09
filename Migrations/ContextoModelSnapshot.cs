@@ -84,11 +84,10 @@ namespace GestionPrestamos2022.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("FechaPrestamo")
+                    b.Property<DateTime>("FechaPrestamo")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("FechaVence")
-                        .IsRequired()
+                    b.Property<DateTime>("FechaVence")
                         .HasColumnType("TEXT");
 
                     b.Property<float>("Monto")

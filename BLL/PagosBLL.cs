@@ -21,17 +21,17 @@ namespace GestionPrestamos2022.BLL
         {
             _contexto.Pagos.Add(pagos);
 
-        foreach (var item in pagos.PagosDetalle)
-        {
-            var pago = _contexto.Pagos.Find(item.PagosId);
+            foreach (var item in pagos.PagosDetalle)
+            {
+                var pago = _contexto.Pagos.Find(item.PagosId);
 
-            pago.Monto += item.ValorPagado;
+                pago.Monto += item.ValorPagado;
 
-        }
+            }
 
-        var insertados = _contexto.SaveChanges();
+            var insertados = _contexto.SaveChanges();
 
-        return insertados > 0;
+            return insertados > 0;
         }
         private bool Modificar(Pagos pagos)
         {
@@ -43,6 +43,7 @@ namespace GestionPrestamos2022.BLL
                 _contexto.Entry(item).State = EntityState.Added;
             }
             _contexto.Entry(pagos).State = EntityState.Modified;
+
             return _contexto.SaveChanges() > 0;
 
         }
@@ -68,6 +69,15 @@ namespace GestionPrestamos2022.BLL
             .Include(o => o.PagosDetalle)
             .AsNoTracking()
             .SingleOrDefault();
+        }
+
+        public List<Pagos> BuscarP(DateTime fecha)
+        {
+
+            var fechas = _contexto.Pagos
+             .Where(f => f.Fecha.Date == fecha.Date)
+             .AsNoTracking().ToList();
+            return fechas;
         }
         public List<Pagos> GetList(Expression<Func<Pagos, bool>> Criterio)
         {

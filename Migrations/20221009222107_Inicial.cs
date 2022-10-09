@@ -64,7 +64,7 @@ namespace GestionPrestamos2022.Migrations
                 {
                     PrestamosId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    FechaPrestamo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    FechaPrestamo = table.Column<DateTime>(type: "TEXT", nullable: false),
                     FechaVence = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Concepto = table.Column<string>(type: "TEXT", nullable: false),
                     Monto = table.Column<float>(type: "REAL", nullable: false),
