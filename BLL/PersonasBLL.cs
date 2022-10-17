@@ -35,13 +35,7 @@ namespace GestionPrestamos2022.BLL
             else
                 return this.Modificar(persona);
         }
-        public bool Editar(Personas persona)
-        {
-            if (!Existe(persona.PersonaId))
-                return this.Insertar(persona);
-            else
-                return this.Modificar(persona);
-        }
+     
 
         public bool Eliminar(Personas persona)
         {
@@ -59,7 +53,7 @@ namespace GestionPrestamos2022.BLL
         public List<Personas> BuscarP(string Nombre)
         {
             var nombreE = _contexto.Personas
-             .Where(p => p.Nombres == Nombre)
+             .Where(p => p.Nombre.ToUpper() == Nombre.ToUpper())
              .AsNoTracking().ToList();
             return nombreE;
         }

@@ -1,5 +1,5 @@
 @page "/pago"
-@inject PAgosBLL PagosBLL
+@inject PagosBLL PagosBLL
 @inject NotificationService notificationService
 
 <EditForm Model="listaPagos">
@@ -13,6 +13,9 @@
                     <button type="button" @onclick="Buscar">
                         <i class="oi oi-magnifying-glass" /> Buscar
                     </button>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button" @onclick= "Todos">Todos los Registros</button> 
                 </div>
             </div>
    
@@ -32,12 +35,12 @@
                     @foreach (var pago in listaPagos)
                     {
                         <tr>
-                            <td>@pago.PagosId</td>
+                            <td>@pago.PagoId</td>
                             <td>@pago.Fecha</td>
                             <td>@pago.PersonaId</td>
                             <td>@pago.Concepto</td>
                             <td>@pago.Monto</td>
-                            <td><a href="Pagos/@pago.PagosId">Ver</a></td>
+                            <td><a href="Pagos/@pago.PagoId">Ver</a></td>
                         </tr>
                     }
 
@@ -56,37 +59,20 @@
     public DateTime fecha { get; set; }
     public List<Pagos> listaPagos { get; set; } = new List<Pagos>();
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            fecha = DateTime.Now;
-        }
-    
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        fecha = DateTime.Now;
+    }
+
     public void Buscar()
-    {
-         if (fecha != null )
-        {
-
-            listaPagos = PagosBLL.BuscarP(fecha);
-
-        }
-        else
-        {
-             ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "No se encontraron Pagos en esta fecha"
-            });
-        }
-        
+    {  
+        listaPagos = PagosBLL.BuscarP(fecha);   
+    }
+    public void Todos(){
+        listaPagos = PagosBLL.GetList(o => true);
     }
     
-      void ShowNotification(NotificationMessage message)
-    {
-        notificationService.Notify(message);
-
-    }
 
 }
 

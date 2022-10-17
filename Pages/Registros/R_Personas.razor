@@ -9,12 +9,11 @@
 <EditForm Model="persona" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
     <div class="card">
+
         <div class="card-header">
             <h3>Registro de Personas</h3>
-             <div style="float:right">
-                <td><a href="/personas"><h6>Ir a Consulta de Personas</h6></a></td>
-            </div> 
         </div>
+
         <div class="card-body">
             <form>
                 @*PersonaId*@
@@ -33,14 +32,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 @*Nombres*@
                 <div class="mb-3">
                     <label>Nombres</label>
-                    <InputText @bind-Value="persona.Nombres" class="form-control" />
-                    <ValidationMessage For="@(() => persona.Nombres)" />
+                    <InputText @bind-Value="persona.Nombre" class="form-control" />
+                    <ValidationMessage For="@(() => persona.Nombre)" />
                 </div>
-                 @*Direccion*@
+                @*Direccion*@
                 <div class="mb-3">
                     <label>Direccion</label>
                     <InputText @bind-Value="persona.Direccion" class="form-control" />
@@ -51,31 +50,31 @@
                 <div class="mb-3">
                     <label>Email</label>
                     <InputText @bind-Value="persona.Email"
-                                 class="form-control" />
+                               class="form-control" />
                     <ValidationMessage For="@(() => persona.Email)" />
                 </div>
                 @*FechaNacimiento*@
                 <div class="mb-3">
                     <label>Fecha De Nacimiento</label>
                     <InputDate @bind-Value="persona.FechaNacimiento"
-                                 class="form-control" />
+                               class="form-control" />
                     <ValidationMessage For="@(() => persona.FechaNacimiento)" />
                 </div>
                 @*Telefono*@
                 <div class="mb-3">
                     <label>Telefono</label>
                     <InputText @bind-Value="persona.Telefono"
-                                 class="form-control" />
+                               class="form-control" />
                     <ValidationMessage For="@(() => persona.Telefono)" />
                 </div>
-              @*Balance*@
-            <div class="mb-3">
-                <label>Balance</label>
-                <InputNumber @bind-Value="persona.Balance" class="form-control" />
-                <ValidationMessage For="@(() => persona.Balance)" />
-            </div>
+                @*Balance*@
+                <div class="mb-3">
+                    <label>Balance</label>
+                    <InputNumber readonly="true" @bind-Value="persona.Balance" class="form-control" />
+                    <ValidationMessage For="@(() => persona.Balance)" />
+                </div>
                 <div class="mb-3 col">
-                    <label >Ocupaciones</label>
+                    <label>Ocupaciones</label>
                     <InputSelect class="form-select" @bind-Value="persona.OcupacionId">
                         @foreach (Ocupaciones persona in lista)
                         {
@@ -83,22 +82,19 @@
                         }
                     </InputSelect>
                 </div>
-             
+
             </form>
         </div>
         <div class="card-footer">
             <div class="form-group text-center" display: inline-block>
                 <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
-                   <i class="oi oi-file" /> Nuevo
+                    <i class="oi oi-file" /> Nuevo
                 </button>
                 <button type="submit" class="btn btn-lg btn-success">
-                     <i class="oi oi-document" /> Guardar
-                </button>
-                    <button type="submit" class="btn btn-lg btn-warning"@onclick="Editar">
-                     <i class="oi oi-pencil" /> Editar
+                    <i class="oi oi-document" /> Guardar
                 </button>
                 <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
-                      <i class="oi oi-trash" /> Eliminar
+                    <i class="oi oi-trash" /> Eliminar
                 </button>
             </div>
         </div>
@@ -109,25 +105,24 @@
 @code {
     [Parameter]
     public int PersonaId { get; set; }
-
     public Personas persona { get; set; } = new Personas();
-  
     public String mensaje { get; set; } = "";
     public List<Ocupaciones> lista { get; set; } = new List<Ocupaciones>();
-    
+    public DateTime FechaActual { get; set; } = DateTime.Now;
+
 
     protected override void OnInitialized()
     {
         if (PersonaId > 0)
         {
-           
+
             this.persona.PersonaId = PersonaId;
             this.Buscar();
         }
         lista = ocupacionBLL.GetList(o => true);
     }
 
-       
+
 
     public void Nuevo()
     {
@@ -137,41 +132,45 @@
 
     bool Validar()
     {
-        return persona.Email.Contains(".com");
+        if(persona.FechaNacimiento < FechaActual){
+            return true;
+        }else{
+            return false;
+        }
 
     }
 
     public void Guardar()
     {
         bool guardo;
-        
+
         if (!Validar())
         {
             ShowNotification(
             new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Error Revise los campos "
-            });
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Fecha nacimiento mayor a el dia de hoy"
+                });
             return;
-            
+
         }
 
         guardo = PersonasBLL.Guardar(persona);
-        
+
         if (guardo)
         {
             ShowNotification(
             new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = "Guardado correctamente"
-            });
-            
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Guardado correctamente"
+                });
+
             Nuevo();
-            
+
         }
-        
+
     }
     private void Buscar()
     {
@@ -181,7 +180,7 @@
 
             if (encontrado != null)
                 this.persona = encontrado;
-            
+
         }
     }
 
@@ -195,30 +194,14 @@
         {
             ShowNotification(
             new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Eliminado"
-            });
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Eliminado"
+                });
             Nuevo();
-            
-        }
-        
-    }
-    public  void Editar()
-    {   
-        bool editar;
-        editar = PersonasBLL.Editar(persona);
 
-        if (editar){
-             ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Warning,
-                Summary = "Editado"
-            });
-            
-            Nuevo();
         }
+
     }
 
     void ShowNotification(NotificationMessage message)

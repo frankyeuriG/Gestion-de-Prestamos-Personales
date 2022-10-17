@@ -1,6 +1,6 @@
 
 @page "/personas"
-@inject PersonasBLL personaBLL;
+@inject PersonasBLL personasBll;
 
 <EditForm Model="listas">
     <DataAnnotationsValidator />
@@ -10,9 +10,12 @@
             <div class="mb-3">
                 <input type="text" class="form-control" @bind="Criterio" placeholder="Introduzca un Nombre">
                 <div class="input-group-append col">
-                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
+                    <button type="button" @onclick="Buscar">
                         <i class="oi oi-magnifying-glass" /> Buscar
                     </button>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="button" @onclick="Todos">Todos los Registros</button>
+                    </div>
                 </div>
             </div>
 
@@ -34,7 +37,7 @@
                 {
                         <tr>
                             <td>@personas.PersonaId</td>
-                            <td>@personas.Nombres</td>
+                            <td>@personas.Nombre</td>
                             <td>@personas.FechaNacimiento</td>
                             <td>@personas.Email</td>
                             <td>@personas.Telefono</td>
@@ -59,7 +62,10 @@
     public List<Personas> listas { get; set; } = new List<Personas>();
     public void Buscar()
     {
-        listas = personaBLL.BuscarP(Criterio);
+        listas = personasBll.BuscarP(Criterio);
     }
-
+    public void Todos()
+    {
+        listas = personasBll.GetList(o => true);
+    }
 }
