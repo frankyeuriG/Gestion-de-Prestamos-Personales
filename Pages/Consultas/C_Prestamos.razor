@@ -8,14 +8,17 @@
 
         <div class="container">
 
-          
-        <div class="mb-3">
-            <div class="input-group mb-4">
-            <input type="date" @bind="fecha">
-            <input type="date" @bind="fecha2">
-            <button @onclick="Buscar" class="btn btn-primary"> <i class="oi oi-magnifying-glass"></i></button>
+
+            <div class="mb-3">
+                <div class="input-group mb-4">
+                    <input type="date" @bind="fecha">
+                    <input type="date" @bind="fecha2">
+                    <button @onclick="Buscar" type="button"> <i class="oi oi-magnifying-glass"></i></button>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button" @onclick="Todos">Todos los Registros</button>
+                </div>
             </div>
-        </div>
 
             <table class="table table-success table-striped">
 
@@ -35,14 +38,14 @@
                     @foreach (var prestamo in listasp)
                     {
                         <tr>
-                            <td>@prestamo.PrestamosId</td>
-                            <td>@prestamo.FechaPrestamo</td>
-                            <td>@prestamo.FechaVence</td>
+                            <td>@prestamo.PrestamoId</td>
+                            <td>@prestamo.Fecha</td>
+                            <td>@prestamo.Vence</td>
                             <td>@prestamo.Concepto</td>
                             <td>@prestamo.Monto</td>
                             <td>@prestamo.Balance</td>
                             <td>@prestamo.PersonaId</td>
-                            <td><a href="prestamo/@prestamo.PrestamosId">Ver</a></td>
+                            <td><a href="prestamo/@prestamo.PrestamoId">Ver</a></td>
                         </tr>
                     }
 
@@ -55,11 +58,11 @@
 
 @code
 {
-   
+
     public DateTime fecha { get; set; } = new DateTime();
     public DateTime fecha2 { get; set; } = new DateTime();
     public string Criterio { get; set; } = "";
-    public List<Prestamo> listasp { get; set; } = new List<Prestamo>();
+    public List<Prestamos> listasp { get; set; } = new List<Prestamos>();
 
     protected override void OnInitialized()
     {
@@ -68,20 +71,16 @@
         fecha2 = DateTime.Now;
     }
 
-   
+
     public void Buscar()
     {
-         if (fecha != null || fecha2 != null)
-        {
 
-            listasp = prestamosBLL.Buscarf(fecha,fecha2);
+        listasp = prestamosBLL.Buscarf(fecha, fecha2);
 
-        }
-        else
-        {
-            Console.WriteLine("No se encontro esta fecha");
-        }
-
+    }
+    public void Todos()
+    {
+        listasp = prestamosBLL.GetList(o => true);
     }
 
 }

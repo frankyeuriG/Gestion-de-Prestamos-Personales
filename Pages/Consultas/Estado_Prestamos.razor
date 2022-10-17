@@ -1,0 +1,99 @@
+﻿@page "/EstadoPrestamos"
+
+@inject PagosBLL PagosBLL
+@inject NotificationService notificationService
+@inject PersonasBLL PersonasBLL
+@inject PrestamosBLL prestamosBll
+
+<EditForm Model="Listaprestamos">
+    <DataAnnotationsValidator />
+    <div class="card">
+
+        <div class="container">
+            <label>Introduzca el Numero Prestamo</label>
+            <div class="input-group mb-3">
+                <button @onclick="Buscar" type="button" class="btn btn-info"> <i class="oi oi-magnifying-glass"></i></button>
+                <input class="form-control" type="number" @bind="Id" placeholder="Prestamo Id" />
+            </div>
+            <div class="input-group">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>PrestamosId</th>
+                            <th>Inicio</th>
+                            <th>Vencimiento</th>
+                            <th>Balance Pendiente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var prestamo in Listaprestamos)
+                        {
+                            <tr>
+                                <td>@prestamo.PrestamoId</td>
+                                <td>@prestamo.Fecha</td>
+                                <td>@prestamo.Vence</td>
+                                <td>@prestamo.Balance</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>#Pago</th>
+                            <th>Fecha Pago</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pago in detalle)
+                        {
+                            <tr>
+                                <td>@(cont = cont + 1)</td>
+                                <td>@pago.ValorPagado</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    public Prestamos prestamos { get; set; } = new Prestamos();
+    public int Id { get; set; } = 0;
+    public int cont { get; set; } = 0;
+    public double Total {get; set;} = 0.0;
+    public List<Prestamos> Listaprestamos { get; set; } = new List<Prestamos>();
+    public List<PagosDetalle> detalle { get; set; } = new List<PagosDetalle>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+    public void Buscar()
+    {
+
+        if (Id > 0 )
+    {
+            Listaprestamos = prestamosBll.Filtro2(Id);
+            detalle = PagosBLL.Filtro(Id);
+        }
+        else if (Id <= 0)
+        {
+            ShowNotification(
+            new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "No se Encontro Esta persona"
+                });
+
+        }
+    }
+    void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
+
+    }
+}

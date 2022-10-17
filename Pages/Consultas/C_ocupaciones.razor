@@ -1,5 +1,7 @@
 @page "/ocupaciones"
+
 @inject OcupacionesBLL ocupacionBLL;
+@inject NotificationService notificationService
 
 <EditForm Model="lista">
     <DataAnnotationsValidator />
@@ -9,9 +11,12 @@
             <div class="mb-3">
                 <input type="text" class="form-control" @bind="Criterio" placeholder="Intruduzca la Ocupación" />
                 <div class="input-group-append col">
-                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
+                    <button type="button"  @onclick="Buscar">
                         <i class="oi oi-magnifying-glass" /> Buscar
                     </button>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="button" @onclick="Todos">Todos los Registros</button>
+                    </div>
                 </div>
             </div>
 
@@ -32,7 +37,7 @@
                             <td>@ocupacion.OcupacionId</td>
                             <td>@ocupacion.Descripcion</td>
                             <td>@ocupacion.Salario</td>
-                            <td><a href="ocupacion/@ocupacion.OcupacionId">Ver</a></td>
+                            <td><a href="ocupacion/@ocupacion.OcupacionId">Ver</a></td>   
                         </tr>
                     }
 
@@ -46,15 +51,41 @@
 
 @code
 {
- 
-    public string Criterio { get; set; } = "";
 
+    public string Criterio { get; set; } = "";
     public List<Ocupaciones> lista { get; set; } = new List<Ocupaciones>();
+    public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
+
     public void Buscar()
     {
-        
+
         lista = ocupacionBLL.BuscarO(Criterio);
-        
+
     }
+    public void Todos()
+    {
+        lista = ocupacionBLL.GetList(o => true);
+    }
+    public void Eliminar(){
+
+        bool elimino = ocupacionBLL.Eliminar(ocupacion);
+
+        if(elimino){
+            ShowNotification(
+           new NotificationMessage
+               {
+                   Severity = NotificationSeverity.Error,
+                   Summary = "Eliminado"
+               });
+
+        }
+    }
+
+    void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
+
+    }
+    
 
 }

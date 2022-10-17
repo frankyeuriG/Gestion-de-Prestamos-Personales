@@ -51,7 +51,7 @@ namespace GestionPrestamos2022.BLL
         public List<Ocupaciones> BuscarO(string Profecion)
         {
             var descripcion = _contexto.Ocupaciones
-             .Where(o => o.Descripcion == Profecion)
+             .Where(o => o.Descripcion.ToUpper() == Profecion.ToUpper())
              .AsNoTracking().ToList();
             return descripcion;
         }

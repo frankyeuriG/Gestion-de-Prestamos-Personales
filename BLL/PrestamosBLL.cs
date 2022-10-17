@@ -15,24 +15,27 @@ namespace GestionPrestamos2022.BLL
         }
         public bool Existe(int PrestamosId)
         {
-            return _contexto.Prestamo.Any(o => o.PrestamosId == PrestamosId);
+            return _contexto.Prestamos.Any(o => o.PrestamoId == PrestamosId);
         }
-        private bool Insertar(Prestamo prestamo)
+        private bool Insertar(Prestamos prestamo)
         {
-            _contexto.Prestamo.Add(prestamo);
+            _contexto.Prestamos.Add(prestamo);
+
+            prestamo.Balance = prestamo.Monto;
 
             var persona = _contexto.Personas.Find(prestamo.PersonaId);
+
             persona.Balance += prestamo.Monto;
 
             int Cantidad = _contexto.SaveChanges();
 
             return Cantidad> 0;
         }
-       public bool Modificar(Prestamo prestamoActual)
+       public bool Modificar(Prestamos prestamoActual)
         {
             //descontar el monto anterior
-            var prestamoAnterior = _contexto.Prestamo
-                .Where(p => p.PrestamosId == prestamoActual.PrestamosId)
+            var prestamoAnterior = _contexto.Prestamos
+                .Where(p => p.PrestamoId == prestamoActual.PrestamoId)
                 .AsNoTracking()
                 .SingleOrDefault();
 
@@ -48,21 +51,15 @@ namespace GestionPrestamos2022.BLL
             return _contexto.SaveChanges() > 0;
         }
 
-        public bool Guardar(Prestamo prestamo)
+        public bool Guardar(Prestamos prestamo)
         {
-            if (!Existe(prestamo.PrestamosId))
+            if (!Existe(prestamo.PrestamoId))
                 return this.Insertar(prestamo);
             else
                 return this.Modificar(prestamo);
         }
-         public bool Editar(Prestamo prestamo)
-        {
-            if (!Existe(prestamo.PrestamosId))
-                return this.Insertar(prestamo);
-            else
-                return this.Modificar(prestamo);
-        }
-        public bool Eliminar(Prestamo prestamo)
+      
+        public bool Eliminar(Prestamos prestamo)
         {
             var persona = _contexto.Personas.Find(prestamo.PersonaId);
             persona.Balance -= prestamo.Monto;
@@ -71,28 +68,45 @@ namespace GestionPrestamos2022.BLL
             return _contexto.SaveChanges() > 0;
         }
 
-        public Prestamo? Buscar(int prestamoId)
+        public Prestamos? Buscar(int prestamoId)
         {
-            return _contexto.Prestamo
-            .Where(o => o.PrestamosId == prestamoId)
+            return _contexto.Prestamos
+            .Where(o => o.PrestamoId == prestamoId)
             .AsNoTracking()
             .SingleOrDefault();
         }
 
-        public List<Prestamo> Buscarf(DateTime fecha, DateTime fecha2)
-    {
-
-        var fechas = _contexto.Prestamo
-         .Where(f => f.FechaPrestamo.Date == fecha.Date || f.FechaVence.Date == fecha2.Date)
-         .AsNoTracking().ToList();
-        return fechas;
-    }
-        public List<Prestamo> GetList(Expression<Func<Prestamo, bool>> Criterio)
+        public List<Prestamos> Buscarf(DateTime fecha, DateTime fecha2)
         {
-            return _contexto.Prestamo
+
+            var fechas = _contexto.Prestamos
+             .Where(f => f.Fecha.Date == fecha.Date || f.Vence.Date == fecha2.Date)
+             .AsNoTracking()
+             .ToList();
+            return fechas;
+        }
+        public List<Prestamos> GetList(Expression<Func<Prestamos, bool>> Criterio)
+        {
+            return _contexto.Prestamos
                 .AsNoTracking()
                 .Where(Criterio)
                 .ToList();
+        }
+        public List<Prestamos> Filtro(int id)
+        {
+            var prestamo = _contexto.Prestamos
+             .Where(f => f.PersonaId == id)
+             .AsNoTracking()
+             .ToList();
+            return prestamo;
+        }
+        public List<Prestamos> Filtro2(int id)
+        {
+            var prestamo = _contexto.Prestamos
+             .Where(f => f.PrestamoId == id)
+             .AsNoTracking()
+             .ToList();
+            return prestamo;
         }
 
     }

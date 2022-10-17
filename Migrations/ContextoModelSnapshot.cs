@@ -41,7 +41,7 @@ namespace GestionPrestamos2022.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<float>("Balance")
+                    b.Property<double>("Balance")
                         .HasColumnType("REAL");
 
                     b.Property<string>("Direccion")
@@ -49,14 +49,13 @@ namespace GestionPrestamos2022.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("FechaNacimiento")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Nombres")
+                    b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -71,39 +70,39 @@ namespace GestionPrestamos2022.Migrations
                     b.ToTable("Personas");
                 });
 
-            modelBuilder.Entity("GestionPrestamos2022.Models.Prestamo", b =>
+            modelBuilder.Entity("GestionPrestamos2022.Models.Prestamos", b =>
                 {
-                    b.Property<int>("PrestamosId")
+                    b.Property<int>("PrestamoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<float>("Balance")
+                    b.Property<double>("Balance")
                         .HasColumnType("REAL");
 
                     b.Property<string>("Concepto")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("FechaPrestamo")
+                    b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("FechaVence")
-                        .HasColumnType("TEXT");
-
-                    b.Property<float>("Monto")
+                    b.Property<double>("Monto")
                         .HasColumnType("REAL");
 
                     b.Property<int>("PersonaId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("PrestamosId");
+                    b.Property<DateTime>("Vence")
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("Prestamo");
+                    b.HasKey("PrestamoId");
+
+                    b.ToTable("Prestamos");
                 });
 
             modelBuilder.Entity("GestionPrestamos2022.Pagos", b =>
                 {
-                    b.Property<int>("PagosId")
+                    b.Property<int>("PagoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -120,7 +119,7 @@ namespace GestionPrestamos2022.Migrations
                     b.Property<int>("PersonaId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("PagosId");
+                    b.HasKey("PagoId");
 
                     b.ToTable("Pagos");
                 });
@@ -128,18 +127,21 @@ namespace GestionPrestamos2022.Migrations
             modelBuilder.Entity("GestionPrestamos2022.PagosDetalle", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PagosId")
+                    b.Property<int>("PagoId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PrestamosId")
+                    b.Property<int>("PrestamoId")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("ValorPagado")
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PagoId");
 
                     b.ToTable("PagosDetalle");
                 });
@@ -148,7 +150,7 @@ namespace GestionPrestamos2022.Migrations
                 {
                     b.HasOne("GestionPrestamos2022.Pagos", null)
                         .WithMany("PagosDetalle")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("PagoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

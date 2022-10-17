@@ -1,8 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\BLL"
+    "\\bin",
+    "\\BLL",
+    "\\DAL",
+    "\\Migrations",
+    "\\Models",
+    "\\Pages",
+    "\\Pages\\Registros"
   ],
-  "SelectedNode": "\\BLL\\PrestamosBLL.cs",
+  "SelectedNode": "\\Pages\\Registros\\R_Ocupaciones.razor",
   "PreviewInSolutionExplorer": false
 }

@@ -7,15 +7,14 @@
 @inject PrestamosBLL PrestamosBLL
 
 
-<EditForm Model="prestamo" OnValidSubmit="Guardar">
+<EditForm Model="prestamos" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
     <div class="card">
         <div class="card-header">
             <h3>Registro de Prestamos</h3>
-             <div style="float:right">
-                <td><a href="/prestamos"><h6>Ir a Consulta de Prestamos</h6></a></td>
-            </div> 
+
         </div>
+
         <div class="card-body">
             <form>
                 @*PrestamosId*@
@@ -24,60 +23,62 @@
                         <div class="mb-3">
                             <label>PrestamosId</label>
                             <div class="input-group">
-                                <InputNumber @bind-Value="prestamo.PrestamosId" class="form-control col-4" />
+                                <InputNumber @bind-Value="prestamos.PrestamoId" class="form-control col-4" />
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
-                                        <i class="oi oi-magnifying-glass" /> Buscar                      
+                                        <i class="oi oi-magnifying-glass" /> Buscar
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 @*FechaPrestamo*@
                 <div class="mb-3">
                     <label>Fecha de Inicio</label>
-                    <InputDate readonly="true" @bind-Value="prestamo.FechaPrestamo"
-                                 class="form-control" />
-                 <ValidationMessage For="@(() => prestamo.FechaPrestamo)" />
+                    <InputDate @bind-Value="prestamos.Fecha"
+                               class="form-control" />
+                    <ValidationMessage For="@(() => prestamos.Fecha)" />
                 </div>
-                 @*FechaVence*@
+                @*FechaVence*@
                 <div class="mb-3">
                     <label>Fecha De Vencimiento</label>
-                    <InputDate @bind-Value="prestamo.FechaVence"
-                        class="form-control" />
-                 <ValidationMessage For="@(() => prestamo.FechaVence)" />
+                    <InputDate @bind-Value="prestamos.Vence"
+                               class="form-control" />
+                    <ValidationMessage For="@(() => prestamos.Vence)" />
+                </div>
+
+
+                <div class="mb-3 col">
+                    <label>PersonaId</label>
+                    <InputSelect class="form-select" @bind-Value="prestamos.PersonaId">
+                        @foreach (Personas prestamo in listas)
+                        {
+                            <option value="@prestamo.PersonaId">@prestamo.Nombre (ID: @prestamo.PersonaId)</option>
+                        }
+                    </InputSelect>
                 </div>
 
                 @*Concepto*@
                 <div class="mb-3">
                     <label>Concepto</label>
-                    <InputText @bind-Value="prestamo.Concepto"
-                                 class="form-control" />
-                    <ValidationMessage For="@(() => prestamo.Concepto)" />
+                    <InputText @bind-Value="prestamos.Concepto"
+                               class="form-control" />
+                    <ValidationMessage For="@(() => prestamos.Concepto)" />
                 </div>
-    
-               @*Monto*@
-            <div class="mb-3">
-                <label>Monto</label>
-                <InputNumber @bind-Value="prestamo.Monto" class="form-control" />
-                <ValidationMessage For="@(() => prestamo.Monto)" />
-            </div>
-               @*Balance*@
-            <div class="mb-3">
-                <label> Balance</label>
-                <InputNumber @bind-Value="prestamo.Balance" class="form-control" />
-                <ValidationMessage For="@(() => prestamo.Balance)" />
-            </div>
-                <div class="mb-3 col">
-                    <label >PersonaId</label>
-                    <InputSelect class="form-select" @bind-Value="prestamo.PersonaId">
-                        @foreach (Personas prestamo in listas)
-                        {
-                            <option value="@prestamo.PersonaId">@prestamo.Nombres (ID: @prestamo.PersonaId)</option>
-                        }
-                    </InputSelect>
+
+                @*Monto*@
+                <div class="mb-3">
+                    <label>Monto</label>
+                    <InputNumber @bind-Value="prestamos.Monto" class="form-control" />
+                    <ValidationMessage For="@(() => prestamos.Monto)" />
+                </div>
+                @*Balance*@
+                <div class="mb-3">
+                    <label> Balance</label>
+                    <InputNumber readonly="true" @bind-Value="prestamos.Balance" class="form-control" />
+                    <ValidationMessage For="@(() => prestamos.Balance)" />
                 </div>
 
             </form>
@@ -85,16 +86,13 @@
         <div class="card-footer">
             <div class="mb-3 text-center" display: inline-block>
                 <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
-                    <i class="oi oi-file" /> Nuevo                
+                    <i class="oi oi-file" /> Nuevo
                 </button>
-                <button type="submit" class="btn btn-lg btn-success" >
-                      <i class="oi oi-document" /> Guardar
-                </button>
-                    <button type="submit" class="btn btn-lg btn-warning" @onclick="Editar">
-                   <i class="oi oi-pencil" /> Editar
+                <button type="submit" class="btn btn-lg btn-success">
+                    <i class="oi oi-document" /> Guardar
                 </button>
                 <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
-                   <i class="oi oi-trash" /> Eliminar
+                    <i class="oi oi-trash" /> Eliminar
                 </button>
             </div>
         </div>
@@ -104,76 +102,83 @@
 @code {
     [Parameter]
     public int PrestamoId { get; set; }
-    
-    public Prestamo prestamo { get; set; } = new Prestamo();
-
+    public Prestamos prestamos { get; set; } = new Prestamos();
     public String mensaje { get; set; } = "";
-  
+    public DateTime FectaActual { get; set; } = DateTime.Now;
     public List<Personas> listas { get; set; } = new List<Personas>();
-
-   
 
     protected override void OnInitialized()
     {
+        prestamos.Fecha = DateTime.Now;
+        prestamos.Vence = DateTime.Now;
+ 
+
         if (PrestamoId > 0)
         {
-            this.prestamo.PrestamosId = PrestamoId;
+            this.prestamos.PrestamoId = PrestamoId;
             this.Buscar();
         }
         listas = PersonasBLL.GetList(o => true);
-        prestamo.FechaPrestamo = DateTime.Now;
+   
     }
 
     public void Nuevo()
     {
-        mensaje = "";
-        prestamo = new Prestamo();
+        prestamos = new Prestamos();
+        prestamos.Fecha = DateTime.Now;
+        prestamos.Vence = DateTime.Now;
     }
 
     bool Validar()
     {
-        return true;
+        if (prestamos.Vence.Date > FectaActual.Date)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void Guardar()
     {
         bool guardo;
-        
+
         if (!Validar())
         {
             ShowNotification(
             new NotificationMessage
-            {
-                Severity = NotificationSeverity.Warning,
-                Summary = "No Guardo"
-            });
+                {
+                    Severity = NotificationSeverity.Warning,
+                    Summary = "El prestamo no puede vencer antes de la fecha actual"
+                });
             return;
         }
-        guardo = PrestamosBLL.Guardar(prestamo);
+        guardo = PrestamosBLL.Guardar(prestamos);
 
         if (guardo)
         {
             ShowNotification(
             new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = "Guardado correctamente"
-            });
-            
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Guardado correctamente"
+             });
             Nuevo();
-            
+
         }
-        
+
     }
     private void Buscar()
     {
-        if (prestamo.PrestamosId > 0)
+        if (prestamos.PrestamoId > 0)
         {
-            var encontrado = PrestamosBLL.Buscar(prestamo.PrestamosId);
+            var encontrado = PrestamosBLL.Buscar(prestamos.PrestamoId);
 
             if (encontrado != null)
-                this.prestamo = encontrado;
-            
+                this.prestamos = encontrado;
+
         }
     }
 
@@ -181,37 +186,21 @@
     {
         bool elimino;
 
-        elimino = PrestamosBLL.Eliminar(prestamo);
+        elimino = PrestamosBLL.Eliminar(prestamos);
 
         if (elimino)
-        {   
-             ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Eliminado"
-            });
-            
+        {
+            ShowNotification(
+           new NotificationMessage
+               {
+                   Severity = NotificationSeverity.Error,
+                   Summary = "Eliminado"
+               });
+
             Nuevo();
-            
-        }
-        
-    }
 
-    public  void Editar()
-    {   
-        bool editar;
-        editar = PrestamosBLL.Editar(prestamo);
-
-        if (editar){
-             ShowNotification(
-            new NotificationMessage
-            {
-                Severity = NotificationSeverity.Warning,
-                Summary = "Editado"
-            });
-            Nuevo();   
         }
+
     }
 
     void ShowNotification(NotificationMessage message)
