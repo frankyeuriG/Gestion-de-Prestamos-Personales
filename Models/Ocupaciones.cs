@@ -7,7 +7,7 @@ namespace GestionPrestamos2022.Models
         [Key]
         public int OcupacionId{ get; set;}
 
-        [Required(ErrorMessage = "Ladescripcion es reqquerida")]
+        [Required(ErrorMessage = "La Descripcion es Obligatoria")]
         public string? Descripcion { get; set;}
     
         [Range(minimum:9000, maximum: 5000000, ErrorMessage = "Su salario debe ser mayor de 9,000 y Menor que 5,000,000" )]

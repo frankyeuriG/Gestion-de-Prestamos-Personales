@@ -140,7 +140,7 @@
 
     }
 
-    public void Guardar()
+    public async Task Guardar()
     {
         bool guardo;
 
@@ -156,7 +156,7 @@
 
         }
 
-        guardo = PersonasBLL.Guardar(persona);
+        guardo = await PersonasBLL.Guardar(persona);
 
         if (guardo)
         {
@@ -184,11 +184,11 @@
         }
     }
 
-    public void Eliminar()
+    public async Task Eliminar()
     {
         bool elimino;
 
-        elimino = PersonasBLL.Eliminar(persona);
+        elimino = await PersonasBLL.Eliminar(persona);
 
         if (elimino)
         {

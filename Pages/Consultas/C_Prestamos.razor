@@ -72,10 +72,10 @@
     }
 
 
-    public void Buscar()
+    public async Task Buscar()
     {
 
-        listasp = prestamosBLL.Buscarf(fecha, fecha2);
+        listasp = await prestamosBLL.Buscarf(fecha, fecha2);
 
     }
     public void Todos()

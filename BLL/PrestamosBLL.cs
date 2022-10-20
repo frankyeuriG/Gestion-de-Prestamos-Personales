@@ -13,31 +13,31 @@ namespace GestionPrestamos2022.BLL
         {
             _contexto = contexto;
         }
-        public bool Existe(int PrestamosId)
+        public async Task <bool> Existe(int PrestamosId)
         {
-            return _contexto.Prestamos.Any(o => o.PrestamoId == PrestamosId);
+            return await _contexto.Prestamos.AnyAsync(o => o.PrestamoId == PrestamosId);
         }
-        private bool Insertar(Prestamos prestamo)
+        private async Task <bool> Insertar(Prestamos prestamo)
         {
             _contexto.Prestamos.Add(prestamo);
 
             prestamo.Balance = prestamo.Monto;
 
-            var persona = _contexto.Personas.Find(prestamo.PersonaId);
+            var persona = await _contexto.Personas.FindAsync(prestamo.PersonaId);
 
-            persona.Balance += prestamo.Monto;
+            persona!.Balance += prestamo.Monto;
 
-            int Cantidad = _contexto.SaveChanges();
+            int Cantidad = await _contexto.SaveChangesAsync();
 
             return Cantidad> 0;
         }
-       public bool Modificar(Prestamos prestamoActual)
+       public async Task <bool> Modificar(Prestamos prestamoActual)
         {
             //descontar el monto anterior
-            var prestamoAnterior = _contexto.Prestamos
+            var prestamoAnterior = await _contexto.Prestamos
                 .Where(p => p.PrestamoId == prestamoActual.PrestamoId)
                 .AsNoTracking()
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
 
             var personaAnterior = _contexto.Personas.Find(prestamoAnterior.PersonaId);
             personaAnterior.Balance -= prestamoAnterior.Monto;
@@ -45,27 +45,27 @@ namespace GestionPrestamos2022.BLL
             _contexto.Entry(prestamoActual).State = EntityState.Modified;
             
             //descontar el monto nuevo
-            var persona = _contexto.Personas.Find(prestamoActual.PersonaId);
-            persona.Balance += prestamoActual.Monto;
+            var persona = await _contexto.Personas.FindAsync(prestamoActual.PersonaId);
+            persona!.Balance += prestamoActual.Monto;
 
-            return _contexto.SaveChanges() > 0;
+            return await _contexto.SaveChangesAsync() > 0;
         }
 
-        public bool Guardar(Prestamos prestamo)
+        public async Task<bool> Guardar(Prestamos prestamo)
         {
-            if (!Existe(prestamo.PrestamoId))
-                return this.Insertar(prestamo);
+            if (!await Existe(prestamo.PrestamoId))
+                return await this.Insertar(prestamo);
             else
-                return this.Modificar(prestamo);
+                return await this.Modificar(prestamo);
         }
       
-        public bool Eliminar(Prestamos prestamo)
+        public async Task<bool> Eliminar(Prestamos prestamo)
         {
-            var persona = _contexto.Personas.Find(prestamo.PersonaId);
-            persona.Balance -= prestamo.Monto;
+            var persona = await _contexto.Personas.FindAsync(prestamo.PersonaId);
+            persona!.Balance -= prestamo.Monto;
             
             _contexto.Entry(prestamo).State = EntityState.Deleted;
-            return _contexto.SaveChanges() > 0;
+            return await _contexto.SaveChangesAsync() > 0;
         }
 
         public Prestamos? Buscar(int prestamoId)
@@ -76,13 +76,13 @@ namespace GestionPrestamos2022.BLL
             .SingleOrDefault();
         }
 
-        public List<Prestamos> Buscarf(DateTime fecha, DateTime fecha2)
+        public async Task<List<Prestamos>> Buscarf(DateTime fecha, DateTime fecha2)
         {
 
-            var fechas = _contexto.Prestamos
+            var fechas = await _contexto.Prestamos
              .Where(f => f.Fecha.Date == fecha.Date || f.Vence.Date == fecha2.Date)
              .AsNoTracking()
-             .ToList();
+             .ToListAsync();
             return fechas;
         }
         public List<Prestamos> GetList(Expression<Func<Prestamos, bool>> Criterio)
@@ -92,12 +92,12 @@ namespace GestionPrestamos2022.BLL
                 .Where(Criterio)
                 .ToList();
         }
-        public List<Prestamos> Filtro(int id)
+        public async Task<List<Prestamos>> Filtro(int id)
         {
-            var prestamo = _contexto.Prestamos
+            var prestamo = await _contexto.Prestamos
              .Where(f => f.PersonaId == id)
              .AsNoTracking()
-             .ToList();
+             .ToListAsync();
             return prestamo;
         }
         public List<Prestamos> Filtro2(int id)

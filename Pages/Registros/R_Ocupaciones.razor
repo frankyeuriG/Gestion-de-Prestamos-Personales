@@ -93,7 +93,7 @@
         return true;
     }
 
-    public void Guardar()
+    public async Task Guardar()
     {
         bool guardo;
 
@@ -104,7 +104,7 @@
         }
 
 
-        guardo = OcupacionesBLL.Guardar(ocupacion);
+        guardo = await OcupacionesBLL.Guardar(ocupacion);
 
         if (guardo)
         {
@@ -132,11 +132,11 @@
         }
     }
 
-    public void Eliminar()
+    public async Task Eliminar()
     {
         bool elimino;
 
-        elimino = OcupacionesBLL.Eliminar(ocupacion);
+        elimino = await OcupacionesBLL.Eliminar(ocupacion);
 
         if (elimino)
         {

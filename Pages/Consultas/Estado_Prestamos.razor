@@ -42,7 +42,7 @@
                     <thead>
                         <tr>
                             <th>#Pago</th>
-                            <th>Fecha Pago</th>
+                            <th>Monto Pago</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,13 +72,13 @@
     {
         base.OnInitialized();
     }
-    public void Buscar()
+    public async Task Buscar()
     {
 
         if (Id > 0 )
     {
             Listaprestamos = prestamosBll.Filtro2(Id);
-            detalle = PagosBLL.Filtro(Id);
+            detalle = await PagosBLL.Filtro(Id);
         }
         else if (Id <= 0)
         {

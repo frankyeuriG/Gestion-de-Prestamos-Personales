@@ -14,32 +14,33 @@ namespace GestionPrestamos2022.BLL
         {
             _contexto = contexto;
         }
-        public bool Existe(int ocupacionId)
+        public async Task<bool> Existe(int ocupacionId)
         {
-            return _contexto.Ocupaciones.Any(o => o.OcupacionId == ocupacionId);
+            return await _contexto.Ocupaciones.AnyAsync(o => o.OcupacionId == ocupacionId);
         }
-        private bool Insertar(Ocupaciones ocupacion)
+        private async Task<bool> Insertar(Ocupaciones ocupacion)
         {
-            _contexto.Ocupaciones.Add(ocupacion);
-            return _contexto.SaveChanges() > 0;
+             _contexto.Ocupaciones.Add(ocupacion);
+
+            return await _contexto.SaveChangesAsync() > 0;
         }
-        private bool Modificar(Ocupaciones ocupacion)
+        private async Task<bool> Modificar(Ocupaciones ocupacion)
         {
             _contexto.Entry(ocupacion).State = EntityState.Modified;
-            return _contexto.SaveChanges() > 0;
+            return await _contexto.SaveChangesAsync() > 0;
 
         }
-        public bool Guardar(Ocupaciones ocupacion)
+        public async Task<bool> Guardar(Ocupaciones ocupacion)
         {
-            if (!Existe(ocupacion.OcupacionId))
-                return this.Insertar(ocupacion);
+            if (!await Existe(ocupacion.OcupacionId))
+                return await this.Insertar(ocupacion);
             else
-                return this.Modificar(ocupacion);
+                return await this.Modificar(ocupacion);
         }
-        public bool Eliminar(Ocupaciones ocupacion)
+        public async Task<bool> Eliminar(Ocupaciones ocupacion)
         {
             _contexto.Entry(ocupacion).State = EntityState.Deleted;
-            return _contexto.SaveChanges() > 0;
+            return await _contexto.SaveChangesAsync() > 0;
         }
         public Ocupaciones? Buscar(int ocupacionId)
         {
@@ -48,11 +49,12 @@ namespace GestionPrestamos2022.BLL
             .AsNoTracking()
             .SingleOrDefault();
         }
-        public List<Ocupaciones> BuscarO(string Profecion)
+        public async Task<List<Ocupaciones>> BuscarO(string Profecion)
         {
-            var descripcion = _contexto.Ocupaciones
-             .Where(o => o.Descripcion.ToUpper() == Profecion.ToUpper())
-             .AsNoTracking().ToList();
+            var descripcion = await _contexto.Ocupaciones
+             .Where(o => o.Descripcion!.ToLower() == Profecion.ToLower())
+             .AsNoTracking()
+             .ToListAsync();
             return descripcion;
         }
 
