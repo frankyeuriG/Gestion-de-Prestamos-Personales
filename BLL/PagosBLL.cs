@@ -13,121 +13,121 @@ namespace GestionPrestamos2022.BLL
         {
             _contexto = contexto;
         }
-        public bool Existe(int pagosId)
+        public async Task<bool> Existe(int pagosId)
         {
-            return _contexto.Pagos.Any(o => o.PagoId == pagosId);
+            return await _contexto.Pagos.AnyAsync(o => o.PagoId == pagosId);
         }
-        private bool Insertar(Pagos pagos)
+        private async Task <bool> Insertar(Pagos pagos)
         {
-            _contexto.Pagos.Add(pagos);
+            await _contexto.Pagos.AddAsync(pagos);
 
             foreach (var item in pagos.PagosDetalle)
             {
-                var prestamo = _contexto.Prestamos.Find(item.PrestamoId);
-                prestamo.Balance -= item.ValorPagado;
-
-                pagos.Monto += item.ValorPagado;
+                var prestamo = await _contexto.Prestamos.FindAsync(item.PrestamoId);
+                prestamo!.Balance -= item.ValorPagado;
 
             }
-            var persona = _contexto.Personas.Find(pagos.PersonaId);
-            persona.Balance -= pagos.Monto;
+            var persona = await _contexto.Personas.FindAsync(pagos.PersonaId);
+            persona!.Balance -= pagos.Monto;
 
-            var insertados = _contexto.SaveChanges();
+            var insertados = await _contexto.SaveChangesAsync();
 
             return insertados > 0;
         }
-        private bool Modificar(Pagos pagoActual)
+        private async Task<bool> Modificar(Pagos pagoActual)
         {
-            var pagoAnterior = _contexto.Pagos
+            var pagoAnterior = await _contexto.Pagos
                  .Where(p => p.PagoId == pagoActual.PagoId)
                  .AsNoTracking()
-                 .SingleOrDefault();
+                 .SingleOrDefaultAsync();
 
-            var PersonaAnteriro = _contexto.Personas.Find(pagoAnterior.PersonaId);
-            PersonaAnteriro.Balance += pagoAnterior.Monto;
+            var Persona = await _contexto.Personas.FindAsync(pagoAnterior!.PersonaId);
+            Persona!.Balance += pagoAnterior.Monto;
 
             foreach (var item in pagoAnterior.PagosDetalle)
             {
-                var prestamos = _contexto.Prestamos.Find(item.PrestamoId);
-                prestamos.Balance += pagoAnterior.Monto;
-
-                pagoAnterior.Monto -= item.ValorPagado;
+                var prestamos = await _contexto.Prestamos.FindAsync(item.PrestamoId);
+                prestamos!.Balance += item.ValorPagado;
 
             }
-            _contexto.Database.ExecuteSqlRaw($"Delete FROM PagosDetalle Where PagoId = {pagoActual.PagoId}");
+            await _contexto.Database.ExecuteSqlRawAsync($"Delete FROM PagosDetalle Where PagoId = {pagoActual.PagoId}");
 
             foreach (var item in pagoActual.PagosDetalle)
             {
                 _contexto.Entry(item).State = EntityState.Added;
-                pagoActual.Monto = item.ValorPagado;
+
+                var prestamo = await _contexto.Prestamos.FindAsync(item.PrestamoId);
+                prestamo!.Balance -= item.ValorPagado;
 
             }
+
+            Persona.Balance -= pagoActual.Monto;
+
             _contexto.Entry(pagoActual).State = EntityState.Modified;
 
-            var personaActual = _contexto.Personas.Find(pagoActual.PersonaId);
-            personaActual.Balance -= pagoActual.Monto;
+            _contexto.Entry(pagoActual).State = EntityState.Detached;
 
-            return _contexto.SaveChanges() > 0;
+            return await _contexto.SaveChangesAsync() > 0;
 
         }
-        public bool Guardar(Pagos pagos)
+        public async Task<bool> Guardar(Pagos pagos)
         {
+            var existe = await Existe(pagos.PagoId);
 
-            if (!Existe(pagos.PagoId))
-                return this.Insertar(pagos);
+            if (!existe)
+                return await this.Insertar(pagos);
             else
-                return this.Modificar(pagos);
+                return await this.Modificar(pagos);
         }
 
 
-        public bool Eliminar(Pagos pagos)
+        public async Task<bool> Eliminar(Pagos pagos)
         {
 
-            var persona = _contexto.Personas.Find(pagos.PersonaId);
-            persona.Balance += pagos.Monto;
+            var persona = await _contexto.Personas.FindAsync(pagos.PersonaId);
+            persona!.Balance += pagos.Monto;
 
             foreach (var item in pagos.PagosDetalle)
             {
-                var prestamo = _contexto.Prestamos.Find(item.PrestamoId);
-                prestamo.Balance += item.ValorPagado;
-
-                pagos.Monto -= item.ValorPagado;
+                var prestamo = await _contexto.Prestamos.FindAsync(item.PrestamoId);
+                prestamo!.Balance += item.ValorPagado;
             }
 
             _contexto.Entry(pagos).State = EntityState.Deleted;
 
-            return _contexto.SaveChanges() > 0;
+            return await _contexto.SaveChangesAsync() > 0;
         }
-        public Pagos? Buscar(int pagoId)
+        public async Task<Pagos?> Buscar(int pagoId)
         {
-            return _contexto.Pagos
+            return await _contexto.Pagos
             .Where(o => o.PagoId == pagoId)
             .Include(o => o.PagosDetalle)
             .AsNoTracking()
-            .SingleOrDefault();
+            .SingleOrDefaultAsync();
         }
 
-        public List<Pagos> BuscarP(DateTime fecha)
+        public async Task<List<Pagos>> BuscarP(DateTime fecha)
         {
-            var fechas = _contexto.Pagos
+            var fechas =  await _contexto.Pagos
              .Where(f => f.Fecha.Date == fecha.Date)
-             .AsNoTracking().ToList();
+             .AsNoTracking()
+             .ToListAsync();
             return fechas;
         }
 
-        public List<Pagos> GetList(Expression<Func<Pagos, bool>> Criterio)
+        public async Task<List<Pagos>> GetList(Expression<Func<Pagos, bool>> Criterio)
         {
-            return _contexto.Pagos
+            return await _contexto.Pagos
                 .Where(Criterio)
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
         }
-        public List<PagosDetalle> Filtro(int id)
+        public async Task<List<PagosDetalle>> Filtro(int id)
         {
-            var pago = _contexto.PagosDetalle
-                .Where(p => p.PrestamoId== id)
+            var pago = await _contexto.PagosDetalle
+                .Where(p => p.PrestamoId == id)
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
             return pago;
         }
 

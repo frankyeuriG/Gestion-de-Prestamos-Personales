@@ -13,34 +13,35 @@ namespace GestionPrestamos2022.BLL
         {
             _contexto = contexto;
         }
-        public bool Existe(int personaId)
+        public async Task<bool> Existe(int personaId)
         {
-            return _contexto.Personas.Any(o => o.PersonaId == personaId);
+            return await _contexto.Personas.AnyAsync(o => o.PersonaId == personaId);
         }
-        private bool Insertar(Personas persona)
+        private async Task<bool> Insertar(Personas persona)
         {
             _contexto.Personas.Add(persona);
-            return _contexto.SaveChanges() > 0;
+            return await _contexto.SaveChangesAsync() > 0;
         }
-        private bool Modificar(Personas persona)
+        private async Task<bool> Modificar(Personas persona)
         {
             _contexto.Entry(persona).State = EntityState.Modified;
-            return _contexto.SaveChanges() > 0;
+
+            return await _contexto.SaveChangesAsync() > 0;
 
         }
-        public bool Guardar(Personas persona)
+        public async Task <bool> Guardar(Personas persona)
         {
-            if (!Existe(persona.PersonaId))
-                return this.Insertar(persona);
+            if (!await Existe(persona.PersonaId))
+                return await this.Insertar(persona);
             else
-                return this.Modificar(persona);
+                return await this.Modificar(persona);
         }
      
 
-        public bool Eliminar(Personas persona)
+        public async Task<bool> Eliminar(Personas persona)
         {
             _contexto.Entry(persona).State = EntityState.Deleted;
-            return _contexto.SaveChanges() > 0;
+            return await _contexto.SaveChangesAsync() > 0;
         }
         public Personas? Buscar(int personaId)
         {
@@ -50,11 +51,12 @@ namespace GestionPrestamos2022.BLL
             .SingleOrDefault();
         }
 
-        public List<Personas> BuscarP(string Nombre)
+        public async Task<List<Personas>> BuscarP(string Nombre)
         {
-            var nombreE = _contexto.Personas
-             .Where(p => p.Nombre.ToUpper() == Nombre.ToUpper())
-             .AsNoTracking().ToList();
+            var nombreE = await _contexto.Personas
+             .Where(p => p.Nombre!.ToLower() == Nombre.ToLower())
+             .AsNoTracking()
+             .ToListAsync();
             return nombreE;
         }
         public List<Personas> GetList(Expression<Func<Personas, bool>> Criterio)

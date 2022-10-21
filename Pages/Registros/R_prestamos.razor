@@ -141,7 +141,7 @@
         }
     }
 
-    public void Guardar()
+    public async Task Guardar()
     {
         bool guardo;
 
@@ -155,7 +155,7 @@
                 });
             return;
         }
-        guardo = PrestamosBLL.Guardar(prestamos);
+        guardo = await PrestamosBLL.Guardar(prestamos);
 
         if (guardo)
         {
@@ -182,11 +182,11 @@
         }
     }
 
-    public void Eliminar()
+    public async Task Eliminar()
     {
         bool elimino;
 
-        elimino = PrestamosBLL.Eliminar(prestamos);
+        elimino = await PrestamosBLL.Eliminar(prestamos);
 
         if (elimino)
         {

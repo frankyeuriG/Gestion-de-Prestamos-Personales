@@ -12,7 +12,7 @@ namespace GestionPrestamos2022.Models
        [Required(ErrorMessage ="Es obligatorio introducir el nombre")]
         public string? Nombre { get; set; }
 
-        [RegularExpression("^([\\w\\.\\-]+)@([\\w\\-]+)((\\.(\\w){2,3})+)$", ErrorMessage = "Debes Indicar ub Email Valido")]
+        [RegularExpression("^([\\w\\.\\-]+)@([\\w\\-]+)((\\.(\\w){2,3})+)$", ErrorMessage = "Debe Indicar un Email Valido")]
         public string? Email { get; set; }
         
          [Required(ErrorMessage ="Es obligatorio la Direccion")]

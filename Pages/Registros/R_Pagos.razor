@@ -109,13 +109,29 @@
                     <tbody>
                         @foreach (var item in pagos.PagosDetalle)
                         {
+
+                            if (item == pagos.PagosDetalle.ElementAt(0))
+                            {
+                                pagos.Monto = 0;
+                            }
                             <tr>
                                 <td>@item.PrestamoId</td>
-                                <td>@item.ValorPagado</td>
+                                <td>@item.ValorPagado</td> 
                             </tr>
+
+                            pagos.Monto += item.ValorPagado;
                         }
                     </tbody>
                 </table>
+                <div class="row justify-content-between">
+                    <div class="col-4">
+                        <label>Monto Total</label>
+                        <div class="input-group mb-3">
+                            <span class="form-control">@pagos.Monto</span>
+                        </div>
+                    </div>
+                </div>
+
 
                 <hr />
             </div>
@@ -144,7 +160,6 @@
     public int PagoId { get; set; }
     public Pagos pagos { get; set; } = new Pagos();
     public Personas persona { get; set; } = new Personas();
-    public double total { get; set; } = 0.0;
     public Prestamos prestamos { get; set; } = new Prestamos();
     public PagosDetalle detalle { get; set; } = new PagosDetalle();
     public List<Personas> listPersonas { get; set; } = new List<Personas>();
@@ -159,23 +174,22 @@
         if (PagoId > 0)
         {
             this.pagos.PagoId = PagoId;
-            this.Buscar();
         }
 
-        listPersonas = PersonasBLL.GetList(o => true);
+        listPersonas =  PersonasBLL.GetList(o => true);
 
     }
-    public void Cargar()
+    public async Task Cargar()
     {
         if (pagos.PersonaId > 0)
-            listPrestamos = prestamosBll.Filtro(pagos.PersonaId);
+            listPrestamos = await prestamosBll.Filtro(pagos.PersonaId);
     }
 
-    private void Buscar()
+    private async Task Buscar()
     {
         if (pagos.PagoId > 0)
         {
-            var encontrado = PagosBLL.Buscar(pagos.PagoId);
+            var encontrado = await PagosBLL.Buscar(pagos.PagoId);
 
             if (encontrado != null)
                 this.pagos = encontrado;
@@ -221,7 +235,7 @@
         pagos = new Pagos();
     }
 
-    public void Guardar()
+    public async Task Guardar()
     {
         bool guardo;
 
@@ -237,7 +251,7 @@
         }
 
 
-        guardo = PagosBLL.Guardar(pagos);
+        guardo = await PagosBLL.Guardar(pagos);
 
         if (guardo)
         {
@@ -258,11 +272,12 @@
         pagos.PagosDetalle.Remove(detalle);
         detalle = new PagosDetalle();
     }
-    public void Eliminar()
+
+    public async Task  Eliminar()
     {
         bool elimino;
 
-        elimino = PagosBLL.Eliminar(pagos);
+        elimino =  await PagosBLL.Eliminar(pagos);
 
         if (elimino)
         {

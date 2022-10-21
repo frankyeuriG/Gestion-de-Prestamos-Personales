@@ -11,12 +11,13 @@ namespace GestionPrestamos2022{
         [Key]
         public int PagoId {get; set;}
 
-        [Required(ErrorMessage ="Requerida")]
+        [Required(ErrorMessage ="La Fecha es requerida")]
         public DateTime Fecha {get; set;}
 
         [Required(ErrorMessage ="La Persona es Obligatoria")]
         public int PersonaId{get; set;}
 
+        [Required(ErrorMessage ="El Concepto es Obligatorio")]
         public string? Concepto{get; set;}
 
         public double Monto{get; set;}
@@ -33,10 +34,10 @@ namespace GestionPrestamos2022{
 
         public int PagoId{get; set;}
 
-        [Required(ErrorMessage ="Obligatorio")]
+        [Required(ErrorMessage ="El Numero de prestamo es Obligatorio")]
         public int PrestamoId{get; set;}
 
-        [Range(minimum:100 , maximum:1000000000000, ErrorMessage ="El minimo a pagar es 100")]
+        [Range(minimum:0.01 , maximum:1000000000000, ErrorMessage = "Indique el valor a pagar")]
         public double ValorPagado {get; set;}
 
     }

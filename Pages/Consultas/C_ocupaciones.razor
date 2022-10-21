@@ -11,7 +11,7 @@
             <div class="mb-3">
                 <input type="text" class="form-control" @bind="Criterio" placeholder="Intruduzca la Ocupación" />
                 <div class="input-group-append col">
-                    <button type="button"  @onclick="Buscar">
+                    <button class="btn btn-group-sm" type="button"  @onclick="Buscar">
                         <i class="oi oi-magnifying-glass" /> Buscar
                     </button>
                     <div class="d-grid gap-2">
@@ -51,34 +51,19 @@
 
 @code
 {
-
     public string Criterio { get; set; } = "";
     public List<Ocupaciones> lista { get; set; } = new List<Ocupaciones>();
     public Ocupaciones ocupacion { get; set; } = new Ocupaciones();
 
-    public void Buscar()
+    public async Task Buscar()
     {
 
-        lista = ocupacionBLL.BuscarO(Criterio);
+        lista = await ocupacionBLL.BuscarO(Criterio);
 
     }
     public void Todos()
     {
         lista = ocupacionBLL.GetList(o => true);
-    }
-    public void Eliminar(){
-
-        bool elimino = ocupacionBLL.Eliminar(ocupacion);
-
-        if(elimino){
-            ShowNotification(
-           new NotificationMessage
-               {
-                   Severity = NotificationSeverity.Error,
-                   Summary = "Eliminado"
-               });
-
-        }
     }
 
     void ShowNotification(NotificationMessage message)

@@ -58,11 +58,11 @@
 @code
 {
     public string Criterio { get; set; } = "";
-
     public List<Personas> listas { get; set; } = new List<Personas>();
-    public void Buscar()
+
+    public async Task Buscar()
     {
-        listas = personasBll.BuscarP(Criterio);
+        listas = await personasBll.BuscarP(Criterio);
     }
     public void Todos()
     {
