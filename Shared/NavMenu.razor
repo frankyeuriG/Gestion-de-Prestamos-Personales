@@ -9,52 +9,22 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="ocupacion">
-                <span class="oi oi-monitor" aria-hidden="true"></span> Registro Ocupaciones
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="ocupaciones">
-                <span class="oi oi-document" aria-hidden="true"></span> Cosulta Ocupaciones
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="persona">
-                <span class="oi oi-person" aria-hidden="true"></span> Registro Personas
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="personas">
-                <span class="oi oi-briefcase" aria-hidden="true"></span> Consulta Personas
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="prestamo">
-                <span class="oi oi-check" aria-hidden="true"></span> Registro Prestamos
-            </NavLink>
-        </div>
+        <RadzenPanelMenu class="border-primary">
+            <RadzenPanelMenuItem Text="Registros" Icon="fieldset">
+                <RadzenPanelMenuItem Text="Ocupacion" Path="ocupacion" Icon="attach_money" />
+                <RadzenPanelMenuItem Text="Persona" Path="persona" Icon="person" />
+                <RadzenPanelMenuItem Text="Prestamo" Path="prestamo" Icon="request_quote" />
+                <RadzenPanelMenuItem Text="Pago" Path="Pagos" Icon="price_change" />
+            </RadzenPanelMenuItem>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="prestamos">
-                <span class="oi oi-people" aria-hidden="true"></span> Consulta Prestamos
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Pagos">
-                <span class="oi oi-dollar" aria-hidden="true"></span> Registro Pagos
-            </NavLink>
-        </div>
-         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="pago">
-                <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Consulta Pagos
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="EstadoPrestamos">
-                <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Estado de Prestamos
-            </NavLink>
-        </div>
+            <RadzenPanelMenuItem Text="Consultas" Icon="list">
+                <RadzenPanelMenuItem Text="Ocupaciones" Path="ocupaciones" Icon="attach_money" />
+                <RadzenPanelMenuItem Text="Personas" Path="personas" Icon="person" />
+                <RadzenPanelMenuItem Text="Prestamos" Path="prestamos" Icon="request_quote" />
+                <RadzenPanelMenuItem Text="Pagos" Path="pago" Icon="price_change" />
+                <RadzenPanelMenuItem Text="Estado de Prestamos" Path="EstadoPrestamos" Icon="line_style" />
+            </RadzenPanelMenuItem>
+        </RadzenPanelMenu>
 
     </nav>
 </div>

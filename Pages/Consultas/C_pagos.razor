@@ -7,18 +7,21 @@
 
     <div class="card">
         <div class="container">
-            <div class="mb-3">
-                <InputDate class="form-control" @bind-Value="fecha" />
-                <div class="input-group-append col-2">
-                    <button type="button" @onclick="Buscar">
-                        <i class="oi oi-magnifying-glass" /> Buscar
-                    </button>
-                </div>
-                <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="button" @onclick= "Todos">Todos los Registros</button> 
+
+            <div class="card-body">
+                <div class="mb-3">
+                    <InputDate class="form-control" @bind-Value="fecha" />
+                    <div class="input-group-append col-2">
+                        <button type="button" @onclick="Buscar">
+                            <i class="oi oi-magnifying-glass" /> Buscar
+                        </button>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="button" @onclick="Todos">Todos los Registros</button>
+                    </div>
                 </div>
             </div>
-   
+
             <table class="table table-success table-striped">
 
                 <thead>
@@ -55,7 +58,7 @@
 @code
 {
     public string Filtro { get; set; } = "";
-    public Pagos pagos{get; set;} = new Pagos();
+    public Pagos pagos { get; set; } = new Pagos();
     public DateTime fecha { get; set; }
     public List<Pagos> listaPagos { get; set; } = new List<Pagos>();
 
@@ -66,13 +69,14 @@
     }
 
     public async Task Buscar()
-    {  
-        listaPagos = await PagosBLL.BuscarP(fecha);   
+    {
+        listaPagos = await PagosBLL.BuscarP(fecha);
     }
-    public async Task Todos(){
+    public async Task Todos()
+    {
         listaPagos = await PagosBLL.GetList(o => true);
     }
-    
+
 
 }
 

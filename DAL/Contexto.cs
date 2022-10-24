@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using GestionPrestamos2022.Models;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GestionPrestamos2022.DAL { 
 
-public class Contexto : DbContext
+public class Contexto : IdentityDbContext
     {
         public DbSet<Ocupaciones> Ocupaciones {get; set;}
         public DbSet<Personas> Personas {get; set;}

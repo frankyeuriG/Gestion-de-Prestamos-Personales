@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yeuri\\OneDrive\\Escritorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj": {}
+    "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada1\\Tareas Laboratorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yeuri\\OneDrive\\Escritorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj": {
+    "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada1\\Tareas Laboratorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj",
+        "projectUniqueName": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada1\\Tareas Laboratorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj",
         "projectName": "GestionPrestamos2022",
-        "projectPath": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj",
+        "projectPath": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada1\\Tareas Laboratorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj",
         "packagesPath": "C:\\Users\\yeuri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\GestionPrestamos2022\\obj\\",
+        "outputPath": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada1\\Tareas Laboratorio\\GestionPrestamos2022\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\yeuri\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,18 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[6.0.9, )"
