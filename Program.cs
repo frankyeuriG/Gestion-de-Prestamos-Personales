@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using GestionPrestamos2022.BLL;
 using Radzen.Blazor;
 using Radzen;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Components.Authorization;
+using GestionPrestamos2022.Areas.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +18,16 @@ builder.Services.AddDbContext<Contexto>(Options =>
     Options.UseSqlite(ConStr)
 );
 
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<Contexto>();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+
 builder.Services.AddScoped<OcupacionesBLL>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<PersonasBLL>();
@@ -40,7 +50,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
+app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

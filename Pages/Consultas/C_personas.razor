@@ -1,20 +1,22 @@
-
 @page "/personas"
 @inject PersonasBLL personasBll;
 
 <EditForm Model="listas">
     <DataAnnotationsValidator />
 
-     <div class="card">
+    <div class="card">
         <div class="container">
-            <div class="mb-3">
-                <input type="text" class="form-control" @bind="Criterio" placeholder="Introduzca un Nombre">
-                <div class="input-group-append col">
-                    <button type="button" @onclick="Buscar">
-                        <i class="oi oi-magnifying-glass" /> Buscar
-                    </button>
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="button" @onclick="Todos">Todos los Registros</button>
+
+            <div class="card-body">
+                <div class="mb-3">
+                    <input type="text" class="form-control" @bind="Criterio" placeholder="Introduzca un Nombre">
+                    <div class="input-group-append col">
+                        <button type="button" @onclick="Buscar">
+                            <i class="oi oi-magnifying-glass" /> Buscar
+                        </button>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="button" @onclick="Todos">Todos los Registros</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,7 +36,7 @@
                 </thead>
                 <tbody>
                     @foreach (var personas in listas)
-                {
+                    {
                         <tr>
                             <td>@personas.PersonaId</td>
                             <td>@personas.Nombre</td>
@@ -45,7 +47,7 @@
                             <td>@personas.OcupacionId</td>
                             <td><a href="persona/@personas.PersonaId">Ver</a></td>
                         </tr>
-                }
+                    }
 
                 </tbody>
 

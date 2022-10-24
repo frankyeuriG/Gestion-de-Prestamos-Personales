@@ -10,10 +10,12 @@
     <div class="card">
 
         <div class="container">
-            <label>Introduzca el Numero Prestamo</label>
-            <div class="input-group mb-3">
-                <button @onclick="Buscar" type="button" class="btn btn-info"> <i class="oi oi-magnifying-glass"></i></button>
-                <input class="form-control" type="number" @bind="Id" placeholder="Prestamo Id" />
+            <div class="card-body">
+                <label>Introduzca el Numero Prestamo</label>
+                <div class="input-group mb-3">
+                    <button @onclick="Buscar" type="button" class="btn btn-info"> <i class="oi oi-magnifying-glass"></i></button>
+                    <input class="form-control" type="number" @bind="Id" placeholder="Prestamo Id" />
+                </div>
             </div>
             <div class="input-group">
                 <table class="table table-sm">
@@ -64,7 +66,7 @@
     public Prestamos prestamos { get; set; } = new Prestamos();
     public int Id { get; set; } = 0;
     public int cont { get; set; } = 0;
-    public double Total {get; set;} = 0.0;
+    public double Total { get; set; } = 0.0;
     public List<Prestamos> Listaprestamos { get; set; } = new List<Prestamos>();
     public List<PagosDetalle> detalle { get; set; } = new List<PagosDetalle>();
 
@@ -75,8 +77,8 @@
     public async Task Buscar()
     {
 
-        if (Id > 0 )
-    {
+        if (Id > 0)
+        {
             Listaprestamos = prestamosBll.Filtro2(Id);
             detalle = await PagosBLL.Filtro(Id);
         }

@@ -8,14 +8,16 @@
 
     <div class="card">
         <div class="container">
-            <div class="mb-3">
-                <input type="text" class="form-control" @bind="Criterio" placeholder="Intruduzca la Ocupación" />
-                <div class="input-group-append col">
-                    <button class="btn btn-group-sm" type="button"  @onclick="Buscar">
-                        <i class="oi oi-magnifying-glass" /> Buscar
-                    </button>
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="button" @onclick="Todos">Todos los Registros</button>
+            <div class="card-body">
+                <div class="mb-3">
+                    <input type="text" class="form-control" @bind="Criterio" placeholder="Intruduzca la Ocupación" />
+                    <div class="input-group-append col">
+                        <button class="btn btn-group-sm" type="button" @onclick="Buscar">
+                            <i class="oi oi-magnifying-glass" /> Buscar
+                        </button>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="button" @onclick="Todos">Todos los Registros</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,7 +39,7 @@
                             <td>@ocupacion.OcupacionId</td>
                             <td>@ocupacion.Descripcion</td>
                             <td>@ocupacion.Salario</td>
-                            <td><a href="ocupacion/@ocupacion.OcupacionId">Ver</a></td>   
+                            <td><a href="ocupacion/@ocupacion.OcupacionId">Ver</a></td>
                         </tr>
                     }
 
@@ -71,6 +73,6 @@
         notificationService.Notify(message);
 
     }
-    
+
 
 }
