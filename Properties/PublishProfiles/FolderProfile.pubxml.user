@@ -4,8 +4,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Users\frank\Desktop\GestionPrestamos2022\bin\Release\net6.0\publish\</_PublishTargetUrl>
-    <History>True|2022-10-12T01:27:17.7123893Z;</History>
+    <_PublishTargetUrl>C:\Users\yeuri\OneDrive\Escritorio\Aplicada1\Tareas Laboratorio\GestionPrestamos2022\bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>True|2022-10-28T04:52:08.8403919Z;False|2022-10-28T00:51:05.9989549-04:00;True|2022-10-27T20:12:25.0939873-04:00;True|2022-10-27T19:37:03.3587461-04:00;True|2022-10-27T16:26:12.4183398-04:00;True|2022-10-27T16:04:51.0291107-04:00;True|2022-10-27T15:13:46.5673406-04:00;True|2022-10-11T21:27:17.7123893-04:00;</History>
     <LastFailureDetails />
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
   </PropertyGroup>
 </Project>

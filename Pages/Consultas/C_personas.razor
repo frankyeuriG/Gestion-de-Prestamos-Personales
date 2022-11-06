@@ -64,10 +64,10 @@
 
     public async Task Buscar()
     {
-        listas = await personasBll.BuscarP(Criterio);
+        listas = await personasBll.GetList(p => p.Nombre!.ToLower() == Criterio.ToLower());
     }
-    public void Todos()
+    public async Task Todos()
     {
-        listas = personasBll.GetList(o => true);
+        listas = await personasBll.GetList(o => true);
     }
 }

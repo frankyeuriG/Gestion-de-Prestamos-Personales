@@ -36,37 +36,25 @@ namespace GestionPrestamos2022.BLL
             else
                 return await this.Modificar(persona);
         }
-     
-
         public async Task<bool> Eliminar(Personas persona)
         {
             _contexto.Entry(persona).State = EntityState.Deleted;
             return await _contexto.SaveChangesAsync() > 0;
         }
-        public Personas? Buscar(int personaId)
+        public async Task<Personas?> Buscar(int personaId)
         {
-            return _contexto.Personas
+            return await _contexto.Personas
             .Where(o => o.PersonaId == personaId)
             .AsNoTracking()
-            .SingleOrDefault();
+            .SingleOrDefaultAsync();
         }
-
-        public async Task<List<Personas>> BuscarP(string Nombre)
+        public async Task<List<Personas>> GetList(Expression<Func<Personas, bool>> Criterio)
         {
-            var nombreE = await _contexto.Personas
-             .Where(p => p.Nombre!.ToLower() == Nombre.ToLower())
-             .AsNoTracking()
-             .ToListAsync();
-            return nombreE;
-        }
-        public List<Personas> GetList(Expression<Func<Personas, bool>> Criterio)
-        {
-            return _contexto.Personas
+            return await _contexto.Personas
                 .AsNoTracking()
                 .Where(Criterio)
-                .ToList();
+                .ToListAsync();
         }
-
     }
 
 }

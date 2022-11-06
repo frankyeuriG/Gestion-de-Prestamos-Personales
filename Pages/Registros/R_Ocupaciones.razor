@@ -7,7 +7,7 @@
 <EditForm Model="ocupacion" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
 
-    <div class="card">
+    <div class="card shadow-lg">
         <div class="card-header">
             <h3>Registro de Ocupaciones</h3>
 
@@ -72,13 +72,13 @@
     public String mensaje { get; set; } = "";
 
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         if (OcupacionId > 0)
         {
            
             this.ocupacion.OcupacionId = OcupacionId;
-            this.Buscar();
+            await this.Buscar();
         }
     }
 
@@ -120,11 +120,11 @@
         }
         
     }
-    private void Buscar()
+    private async Task Buscar()
     {
         if (ocupacion.OcupacionId > 0)
         {
-            var encontrado = OcupacionesBLL.Buscar(ocupacion.OcupacionId);
+            var encontrado = await OcupacionesBLL.Buscar(ocupacion.OcupacionId);
 
             if (encontrado != null)
                 this.ocupacion = encontrado;

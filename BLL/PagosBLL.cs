@@ -60,8 +60,8 @@ namespace GestionPrestamos2022.BLL
                 prestamo!.Balance -= item.ValorPagado;
 
             }
-
-            Persona.Balance -= pagoActual.Monto;
+            var PersonaActual = await _contexto.Personas.FindAsync(pagoActual.PersonaId);
+            PersonaActual!.Balance -= pagoActual.Monto;
 
             _contexto.Entry(pagoActual).State = EntityState.Modified;
 
@@ -105,16 +105,6 @@ namespace GestionPrestamos2022.BLL
             .AsNoTracking()
             .SingleOrDefaultAsync();
         }
-
-        public async Task<List<Pagos>> BuscarP(DateTime fecha)
-        {
-            var fechas =  await _contexto.Pagos
-             .Where(f => f.Fecha.Date == fecha.Date)
-             .AsNoTracking()
-             .ToListAsync();
-            return fechas;
-        }
-
         public async Task<List<Pagos>> GetList(Expression<Func<Pagos, bool>> Criterio)
         {
             return await _contexto.Pagos

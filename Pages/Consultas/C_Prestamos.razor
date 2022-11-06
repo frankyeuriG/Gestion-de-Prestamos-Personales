@@ -65,9 +65,9 @@
     public string Criterio { get; set; } = "";
     public List<Prestamos> listasp { get; set; } = new List<Prestamos>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
         fecha = DateTime.Now;
         fecha2 = DateTime.Now;
     }
@@ -76,12 +76,12 @@
     public async Task Buscar()
     {
 
-        listasp = await prestamosBLL.Buscarf(fecha, fecha2);
+        listasp = await prestamosBLL.GetList(p => p.Fecha.Date == fecha.Date || p.Vence.Date == fecha2.Date);
 
     }
-    public void Todos()
+    public async Task Todos()
     {
-        listasp = prestamosBLL.GetList(o => true);
+        listasp = await prestamosBLL.GetList(p => true);
     }
 
 }

@@ -9,7 +9,8 @@
 
 <EditForm Model="prestamos" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
-    <div class="card">
+
+    <div class="card shadow-lg">
         <div class="card-header">
             <h3>Registro de Prestamos</h3>
 
@@ -107,7 +108,7 @@
     public DateTime FectaActual { get; set; } = DateTime.Now;
     public List<Personas> listas { get; set; } = new List<Personas>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         prestamos.Fecha = DateTime.Now;
         prestamos.Vence = DateTime.Now;
@@ -116,9 +117,9 @@
         if (PrestamoId > 0)
         {
             this.prestamos.PrestamoId = PrestamoId;
-            this.Buscar();
+            await this.Buscar();
         }
-        listas = PersonasBLL.GetList(o => true);
+        listas = await PersonasBLL.GetList(o => true);
    
     }
 
@@ -170,11 +171,11 @@
         }
 
     }
-    private void Buscar()
+    private async Task Buscar()
     {
         if (prestamos.PrestamoId > 0)
         {
-            var encontrado = PrestamosBLL.Buscar(prestamos.PrestamoId);
+            var encontrado = await PrestamosBLL.Buscar(prestamos.PrestamoId);
 
             if (encontrado != null)
                 this.prestamos = encontrado;
