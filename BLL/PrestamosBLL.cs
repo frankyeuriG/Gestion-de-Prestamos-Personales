@@ -40,7 +40,7 @@ namespace GestionPrestamos2022.BLL
                 .SingleOrDefaultAsync();
 
             var personaAnterior = _contexto.Personas.Find(prestamoAnterior.PersonaId);
-            personaAnterior.Balance -= prestamoAnterior.Monto;
+            personaAnterior!.Balance -= prestamoAnterior.Monto;
 
             _contexto.Entry(prestamoActual).State = EntityState.Modified;
             
@@ -68,29 +68,19 @@ namespace GestionPrestamos2022.BLL
             return await _contexto.SaveChangesAsync() > 0;
         }
 
-        public Prestamos? Buscar(int prestamoId)
+        public async Task<Prestamos?> Buscar(int prestamoId)
         {
-            return _contexto.Prestamos
+            return await _contexto.Prestamos
             .Where(o => o.PrestamoId == prestamoId)
             .AsNoTracking()
-            .SingleOrDefault();
+            .SingleOrDefaultAsync();
         }
-
-        public async Task<List<Prestamos>> Buscarf(DateTime fecha, DateTime fecha2)
+        public async Task<List<Prestamos>> GetList(Expression<Func<Prestamos, bool>> Criterio)
         {
-
-            var fechas = await _contexto.Prestamos
-             .Where(f => f.Fecha.Date == fecha.Date || f.Vence.Date == fecha2.Date)
-             .AsNoTracking()
-             .ToListAsync();
-            return fechas;
-        }
-        public List<Prestamos> GetList(Expression<Func<Prestamos, bool>> Criterio)
-        {
-            return _contexto.Prestamos
+            return await _contexto.Prestamos
                 .AsNoTracking()
                 .Where(Criterio)
-                .ToList();
+                .ToListAsync();
         }
         public async Task<List<Prestamos>> Filtro(int id)
         {

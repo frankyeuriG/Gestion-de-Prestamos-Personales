@@ -70,11 +70,11 @@
 
     public async Task Buscar()
     {
-        listaPagos = await PagosBLL.BuscarP(fecha);
+        listaPagos = await PagosBLL.GetList(p => p.Fecha.Date == fecha.Date);
     }
     public async Task Todos()
     {
-        listaPagos = await PagosBLL.GetList(o => true);
+        listaPagos = await PagosBLL.GetList(p => true);
     }
 
 

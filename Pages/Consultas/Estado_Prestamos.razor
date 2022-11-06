@@ -79,7 +79,7 @@
 
         if (Id > 0)
         {
-            Listaprestamos = prestamosBll.Filtro2(Id);
+            Listaprestamos = await prestamosBll.GetList(p => p.PrestamoId == Id);
             detalle = await PagosBLL.Filtro(Id);
         }
         else if (Id <= 0)
@@ -88,7 +88,7 @@
             new NotificationMessage
                 {
                     Severity = NotificationSeverity.Error,
-                    Summary = "No se Encontro Esta persona"
+                    Summary = "El id de La persona debe ser mayor que 0"
                 });
 
         }

@@ -42,28 +42,19 @@ namespace GestionPrestamos2022.BLL
             _contexto.Entry(ocupacion).State = EntityState.Deleted;
             return await _contexto.SaveChangesAsync() > 0;
         }
-        public Ocupaciones? Buscar(int ocupacionId)
+        public async Task<Ocupaciones?> Buscar(int ocupacionId)
         {
-            return _contexto.Ocupaciones
+            return await _contexto.Ocupaciones
             .Where(o => o.OcupacionId == ocupacionId)
             .AsNoTracking()
-            .SingleOrDefault();
+            .SingleOrDefaultAsync();
         }
-        public async Task<List<Ocupaciones>> BuscarO(string Profecion)
+        public async Task<List<Ocupaciones>> GetList(Expression<Func<Ocupaciones, bool>> Criterio)
         {
-            var descripcion = await _contexto.Ocupaciones
-             .Where(o => o.Descripcion!.ToLower() == Profecion.ToLower())
-             .AsNoTracking()
-             .ToListAsync();
-            return descripcion;
-        }
-
-        public List<Ocupaciones> GetList(Expression<Func<Ocupaciones, bool>> Criterio)
-        {
-            return _contexto.Ocupaciones
+            return await _contexto.Ocupaciones
                 .AsNoTracking()
                 .Where(Criterio)
-                .ToList();
+                .ToListAsync();
         }
 
     }

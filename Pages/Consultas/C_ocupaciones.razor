@@ -1,7 +1,6 @@
 @page "/ocupaciones"
 
 @inject OcupacionesBLL ocupacionBLL;
-@inject NotificationService notificationService
 
 <EditForm Model="lista">
     <DataAnnotationsValidator />
@@ -60,19 +59,12 @@
     public async Task Buscar()
     {
 
-        lista = await ocupacionBLL.BuscarO(Criterio);
+        lista = await ocupacionBLL.GetList(o => o.Descripcion!.ToLower() == Criterio.ToLower());
 
     }
-    public void Todos()
+    public async Task Todos()
     {
-        lista = ocupacionBLL.GetList(o => true);
+        lista = await ocupacionBLL.GetList(o => true);
     }
-
-    void ShowNotification(NotificationMessage message)
-    {
-        notificationService.Notify(message);
-
-    }
-
 
 }

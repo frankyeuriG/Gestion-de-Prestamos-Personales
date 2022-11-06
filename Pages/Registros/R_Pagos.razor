@@ -9,7 +9,7 @@
 <EditForm Model="pagos" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
 
-    <div class="card">
+    <div class="card shadow-lg">
         <div class="card-header">
             <h3>Registro de Pagos</h3>
         </div>
@@ -108,18 +108,12 @@
                     </thead>
                     <tbody>
                         @foreach (var item in pagos.PagosDetalle)
-                        {
-
-                            if (item == pagos.PagosDetalle.ElementAt(0))
-                            {
-                                pagos.Monto = 0;
-                            }
+                        {   
                             <tr>
                                 <td>@item.PrestamoId</td>
-                                <td>@item.ValorPagado</td> 
-                            </tr>
-
-                            pagos.Monto += item.ValorPagado;
+                                <td>@item.ValorPagado</td>
+                                <td> <button @onclick="@(() => pagos.PagosDetalle.Remove(detalle) )"><i class="oi oi-trash" /> Eliminar</button>   </td>
+                            </tr>   
                         }
                     </tbody>
                 </table>
@@ -167,22 +161,21 @@
 
 
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         pagos.Fecha = DateTime.Now;
+        listPersonas = await PersonasBLL.GetList(o => true);
 
         if (PagoId > 0)
         {
             this.pagos.PagoId = PagoId;
+            await this.Buscar();
         }
-
-        listPersonas =  PersonasBLL.GetList(o => true);
-
     }
     public async Task Cargar()
     {
         if (pagos.PersonaId > 0)
-            listPrestamos = await prestamosBll.Filtro(pagos.PersonaId);
+            listPrestamos = await prestamosBll.GetList(p => p.PersonaId == pagos.PersonaId);
     }
 
     private async Task Buscar()
@@ -197,22 +190,11 @@
         }
     }
     public void AgregarDetalle()
-    {
-        if (pagos.PersonaId > 0)
-        {
+    {        
             pagos.PagosDetalle.Add(detalle);
             detalle = new PagosDetalle();
-        }
-        else
-        {
-            ShowNotification(
-         new NotificationMessage
-             {
-                 Severity = NotificationSeverity.Error,
-                 Summary = "Ingrese una Persona"
-             });
-            return;
-        }
+            pagos.Monto = pagos.PagosDetalle.Sum(d => d.ValorPagado);
+
     }
 
 
@@ -267,12 +249,6 @@
         }
 
     }
-    public void Edetalle()
-    {
-        pagos.PagosDetalle.Remove(detalle);
-        detalle = new PagosDetalle();
-    }
-
     public async Task  Eliminar()
     {
         bool elimino;
@@ -293,14 +269,11 @@
         }
     }
 
-
-
     void ShowNotification(NotificationMessage message)
     {
         notificationService.Notify(message);
 
     }
-
 }
 
 
