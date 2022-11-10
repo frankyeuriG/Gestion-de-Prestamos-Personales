@@ -11222,11 +11222,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada1\\Tareas Laboratorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj",
+      "projectUniqueName": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada\\Prestamos\\Gestion-de-Prestamos-Personales\\GestionPrestamos2022.csproj",
       "projectName": "GestionPrestamos2022",
-      "projectPath": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada1\\Tareas Laboratorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj",
+      "projectPath": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada\\Prestamos\\Gestion-de-Prestamos-Personales\\GestionPrestamos2022.csproj",
       "packagesPath": "C:\\Users\\yeuri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada1\\Tareas Laboratorio\\GestionPrestamos2022\\obj\\",
+      "outputPath": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada\\Prestamos\\Gestion-de-Prestamos-Personales\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\yeuri\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -11313,7 +11313,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

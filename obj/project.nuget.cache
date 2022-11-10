@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sthDHO8NS1Kw8P2hPQxWVnirDQrLmzVFWAS/xzImbsQprKudDzT8ql8GsqTeBndwifm4uOh+Egw7m/VKVJP53w==",
+  "dgSpecHash": "q18n/pvvjGDgUAdQzFQLDGih1CMspaJxEO6K2h68qOeekb/GKa1gwwC8HQC1fOpfdh2b/e4G1QSP0/z28t7rFQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada1\\Tareas Laboratorio\\GestionPrestamos2022\\GestionPrestamos2022.csproj",
+  "projectFilePath": "C:\\Users\\yeuri\\OneDrive\\Escritorio\\Aplicada\\Prestamos\\Gestion-de-Prestamos-Personales\\GestionPrestamos2022.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yeuri\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\yeuri\\.nuget\\packages\\libsassbuilder\\2.0.1\\libsassbuilder.2.0.1.nupkg.sha512",
