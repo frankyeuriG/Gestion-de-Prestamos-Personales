@@ -76,7 +76,7 @@
     public async Task Buscar()
     {
 
-        listasp = await prestamosBLL.GetList(p => p.Fecha.Date == fecha.Date || p.Vence.Date == fecha2.Date);
+        listasp = await prestamosBLL.GetList(p => p.Fecha.Date >= fecha.Date || p.Fecha.Date <= fecha2.Date);
 
     }
     public async Task Todos()
